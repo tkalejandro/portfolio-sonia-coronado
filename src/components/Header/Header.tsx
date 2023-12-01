@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Box, Flex, Heading } from '@chakra-ui/layout';
 import { Button, ButtonGroup } from '@chakra-ui/react';
+import NavBar from '../NavBar/NavBar';
 
 /**
  * THIS HEADER IS DUMMY. IT WILL CHANGE.
@@ -13,7 +14,8 @@ const Header = () => {
       <Box>
         <Heading size="md">Sonia Coronado</Heading>
       </Box>
-      <ButtonGroup gap="2">
+      <NavBar />
+      {/* <ButtonGroup gap="2">
         <Button colorScheme="primary">
           <Link href="/">Home </Link>
         </Button>
@@ -23,7 +25,7 @@ const Header = () => {
         <Button colorScheme="primary">
           <Link href="/docs">Docs </Link>
         </Button>
-      </ButtonGroup>
+      </ButtonGroup> */}
     </Flex>
   );
 };
