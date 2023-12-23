@@ -1,4 +1,4 @@
-import Resume from '@/modules/Resume/Resume';
+import Resume from '@/modules/StaticPages/Resume/Resume';
 import { Box } from '@chakra-ui/react';
 import React from 'react';
 

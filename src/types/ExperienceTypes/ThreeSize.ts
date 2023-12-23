@@ -1,16 +1,3 @@
-interface ThreeSize {
-  /**
-   * Small
-   */
-  sm: [number, number, number];
-  /**
-   * Medium
-   */
-  md: [number, number, number];
-  /**
-   * Large
-   */
-  lg: [number, number, number];
-}
+type ThreeSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 export default ThreeSize;

@@ -3,6 +3,7 @@ html,
 body {
   background-color: #fffff0;
   font-family: 'Montserrat Variable', sans-serif !important;
+  overflow-x: hidden;
 }
 #experience {
   position: fixed;
@@ -11,4 +12,5 @@ body {
   width: 100%;
   height: 100%;
   background: radial-gradient(circle at top, #FAFAFA , #fffff0);
+  overflow: hidden;
 }

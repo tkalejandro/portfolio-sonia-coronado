@@ -1,12 +1,13 @@
+import { useAppTheme } from '@/hooks';
 import { ChakraHtml } from '@/modules/Experience/components';
 import { useAppSettings } from '@/store';
-import { Button, Flex, useTheme } from '@chakra-ui/react';
+import { Button, Flex } from '@chakra-ui/react';
 import { Sparkles } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import React, { useEffect, useRef, useState } from 'react';
 
 const Navigation = () => {
-  const theme = useTheme();
+  const theme = useAppTheme();
 
   const navigationRef = useRef<HTMLDivElement>(null!);
   const [opacity, setOpacity] = useState<number>(0);
@@ -45,7 +46,7 @@ const Navigation = () => {
         scale={[2, 1, 2]} // Scale of the area
         position-y={0}
         speed={0.2}
-        color={theme.colors.primary.secondary}
+        color={theme.colors.secondary[100]}
         count={30}
       />
       <ChakraHtml ref={navigationRef} position={[0, 0.1, 0]}>

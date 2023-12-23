@@ -22,8 +22,8 @@ const resume: Resume = {
       important: true,
       highlights: [
         'Oversaw full scope of music production efforts through the development pipeline including project initialization, tools configuration, design documentation and production planning.',
-        'Collaborated directly with game director and audio director to fulfill the director\'s vision for the music and provided departmental guidance to sustain creative consistency through release.',
-        'Maintained relationships between internal and external disciplines to ensure healthy collaborations with dialogue, music, and sound design teams, in-house supervisors, and the developer\'s leadership team.',
+        "Collaborated directly with game director and audio director to fulfill the director's vision for the music and provided departmental guidance to sustain creative consistency through release.",
+        "Maintained relationships between internal and external disciplines to ensure healthy collaborations with dialogue, music, and sound design teams, in-house supervisors, and the developer's leadership team.",
         'Responsible for design, editing, and implementation of complex interactive music systems using Wwise and Pro Tools, actively managed reviews, approvals, and deliveries.',
       ],
     },

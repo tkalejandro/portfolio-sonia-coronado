@@ -19,4 +19,4 @@ const GuitarModel = ({ ...props }) => {
 
 export default GuitarModel;
 
-useGLTF.preload('/models/guiar.gltf');
+useGLTF.preload('/models/guitar.gltf');

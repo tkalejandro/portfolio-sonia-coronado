@@ -1,5 +1,5 @@
 'use client';
-import { soniaCoronado } from '@/data';
+import { soniaCoronado } from '@/constants';
 import React from 'react';
 import {
   Button,

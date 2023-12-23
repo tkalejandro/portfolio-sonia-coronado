@@ -17,6 +17,7 @@ import { useControls } from 'leva';
 import { DebugButton } from './components';
 import { MainCamera } from './camera';
 import { MainLight } from './lights';
+import { Vector3 } from 'three';
 
 /**
  * Heart of the 3D App
@@ -34,7 +35,7 @@ const Experience = () => {
     contactPosition,
   } = useControls('Layout Location', {
     welcomePosition: { value: [0, 0, 0], step: 0.5 },
-    aboutPosition: { value: [0, -4, 0], step: 0.5 },
+    aboutPosition: { value: [0, -3.5, 0], step: 0.5 },
     projectsAwardsPosition: { value: [0, -8, 0], step: 0.5 },
     audioLibraryPosition: { value: [0, -12, 0], step: 0.5 },
     mediaCoveragePosition: { value: [0, -16, 0], step: 0.5 },
@@ -59,7 +60,9 @@ const Experience = () => {
             <MainLight />
             {debugMode && <Perf position="top-left" />}
             <WelcomeScene position={welcomePosition} />
-            <AboutScene position={aboutPosition} />
+            <AboutScene
+              position={new Vector3(aboutPosition[0], aboutPosition[1], aboutPosition[2])}
+            />
             <ProjectsAwardsScene position={projectsAwardsPosition} />
             <AudioLibraryScene position={audioLibraryPosition} />
             <MediaCoverageScene position={mediaCoveragePosition} />

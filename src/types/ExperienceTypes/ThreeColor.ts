@@ -6,7 +6,7 @@ type ThreeColor =
   | 'secondary'
   | 'warning'
   | 'info'
-  | 'error'
+  | 'danger'
   | 'success'
   | 'black'
   | 'white';

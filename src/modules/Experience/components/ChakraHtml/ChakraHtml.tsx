@@ -1,4 +1,4 @@
-import theme from '@/theme/theme';
+import { theme } from '@/theme/theme';
 import { ChakraProvider, Button } from '@chakra-ui/react';
 import { Html } from '@react-three/drei';
 import { HtmlProps } from '@react-three/drei/web/Html';
