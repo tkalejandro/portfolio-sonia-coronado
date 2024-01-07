@@ -31,7 +31,7 @@ const WelcomeScene = ({ position }: WelcomeSceneProps) => {
   const [action, setAction] = useState<Phase>(Phase.Ready);
   const [navigationOpen, setNavigationOpen] = useState<boolean>(false);
 
-  const mainSound = audioLibrary.omnisphereExperiment();
+  const mainSound = audioLibrary.synthBase();
 
   useEffect(() => {
     if (!distanceFactor) return;

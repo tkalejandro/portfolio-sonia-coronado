@@ -3,56 +3,26 @@
  */
 class AudioLibrary {
   /**
-   * Sounds like brick
+   * Guitar strings that can be mixed with base.
    */
-  hit() {
-    return new Audio('audio/hit.mp3');
-  }
-
-  //THIS SOUNDS ARE DUMMY JUST TO TEST THE CONCEPT OF MANY SOUNDS AT THE SAME TIME
-  /**
-   * 132kb
-   */
-  alienTechnology() {
-    return new Audio('audio/alienTechnology.mp3');
-  }
+  guitars = () => new Audio('audio/guitars.mp3');
 
   /**
-   * 58kb
+   * Sound that will be playing when getting near the secret.
    */
-  birdScreech() {
-    return new Audio('audio/birdScreech.mp3');
-  }
+  stringsSecretApproach = () => new Audio('audio/stringsSecretApproach.mp3');
 
   /**
-   * 123kb
+   * Sound that will be add in the project after user close the secret modal.
    */
-  birdSingingFlapingWings() {
-    return new Audio('audio/birdSingingFlapingWings.mp3');
-  }
+  synthPostSecret = () => new Audio('audio/synthPostSecret.mp3');
 
   /**
-   * 43kb
+   * This is the base song for the project.
    */
-  cockatooBird() {
-    return new Audio('audio/cockatooBird.mp3');
-  }
-
+  synthBase = () => new Audio('audio/synthBase.mp3');
   /**
-   * HEAVY MP3 1.2mb
-   */
-  forestAmbience() {
-    return new Audio('audio/forestAmbience.mp3');
-  }
-  /**
-   * HEAVY MP3 3.6mb
-   */
-  forestSteps() {
-    return new Audio('audio/forestSteps.mp3');
-  }
-
-  /**
-   * WAV song
+   * Song that will be located at the Audiolibrary.
    */
   omnisphereExperiment() {
     return new Audio('audio/omnisphereExperiment.wav');
