@@ -1,6 +1,6 @@
 'use client';
 import { soniaCoronado } from '@/constants';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import {
   Button,
   Heading,
@@ -19,7 +19,28 @@ import {
 
 const Resume = () => {
   const sonia = soniaCoronado;
+  const fullNameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const onSubmit = async (e: { preventDefault: () => void }): Promise<void> => {
+    try {
+      e.preventDefault();
 
+      const fullName = fullNameRef.current?.value;
+      const email = emailRef.current?.value;
+      const description = textAreaRef.current?.value;
+
+      const mailtoLink = `mailto:${sonia.email}?subject=Contact Request - Portfolio Sonia Coronado&body=${description} %0D%0A%0D%0ASincerly,%0D%0A%0D%0A${fullName}%0D%0A${email}%0D%0A`;
+      //Open external Mail App
+      window.location.href = mailtoLink;
+      //Clear values
+      if (fullNameRef.current) fullNameRef.current.value = '';
+      if (emailRef.current) emailRef.current.value = '';
+      if (textAreaRef.current) textAreaRef.current.value = '';
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <>
       <Box maxW="100%" py={8}>
@@ -78,37 +99,24 @@ const Resume = () => {
             <Link href={`phone:${sonia.phone}`}>{sonia.phone}</Link>
           </VStack>
         </address>
-        <form action="">
+        <form action="" onSubmit={onSubmit}>
           <FormControl my={6}>
             <FormLabel>Full Name</FormLabel>
-            <Input type="text" placeholder="Full Name" />
+            <Input type="text" placeholder="Full Name" ref={fullNameRef} />
           </FormControl>
           <FormControl my={6}>
             <FormLabel htmlFor="">Your Email</FormLabel>
-            <Input type="email" placeholder="your@mail.com" />
+            <Input type="email" placeholder="your@mail.com" ref={emailRef} />
           </FormControl>
           <FormControl my={6}>
             <FormLabel htmlFor="">Description</FormLabel>
-            <Textarea placeholder="Enter your description" />
+            <Textarea placeholder="Enter your description" ref={textAreaRef} />
           </FormControl>
-          <Button colorScheme="primary" variant="outline">
+          <Button colorScheme="primary" variant="outline" type="submit">
             Send
           </Button>
         </form>
       </Box>
-      {/* <Dropdown>
-        <DropdownTrigger>
-          <Button variant="bordered">Open Menu</Button>
-        </DropdownTrigger>
-        <DropdownMenu aria-label="Static Actions">
-          <DropdownItem key="new">New file</DropdownItem>
-          <DropdownItem key="copy">Copy link</DropdownItem>
-          <DropdownItem key="edit">Edit file</DropdownItem>
-          <DropdownItem key="delete" className="text-danger" color="danger">
-            Delete file
-          </DropdownItem>
-        </DropdownMenu>
-      </Dropdown> */}
     </>
   );
 };
