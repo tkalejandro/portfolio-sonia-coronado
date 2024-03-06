@@ -17,7 +17,7 @@ const HeadModel = ({ selectedColor, map, mousemove = true, ...props }: HeadModel
 
   const { scene } = useGLTF('/models/head-4.glb');
   const head = useGLTF('/models/cone.glb')
-  // console.log(gltfScene)
+  console.log(gltfScene)
 
   useEffect(() => {
     setGltfScene(scene);
@@ -35,7 +35,36 @@ const HeadModel = ({ selectedColor, map, mousemove = true, ...props }: HeadModel
       const head = gltfScene.children[0].geometry.clone();
       // @ts-ignore
       const eyes = gltfScene.children[2].geometry.clone();
-      console.log(gltfScene)
+      // @ts-ignore
+      const hair = gltfScene.children[4].geometry.clone();
+      console.log(selectedColor)
+      const incrementHexColor = (hexColor: any, increment: any) => {
+        // Remove the '#' from the beginning of the hex color
+        hexColor = hexColor.replace('#', '');
+        
+        // Convert the hexadecimal color to decimal
+        var decimalColor = parseInt(hexColor, 16);
+        
+        // Increment the decimal color by the specified increment
+        decimalColor += increment;
+        
+        // Ensure the color does not exceed the maximum value (FFFFFF)
+        decimalColor = Math.min(decimalColor, parseInt('FFFFFF', 16));
+        
+        // Convert the incremented decimal color back to hexadecimal
+        var incrementedHexColor = decimalColor.toString(16);
+        
+        // Add leading zeros if necessary
+        incrementedHexColor = '#' + '0'.repeat(6 - incrementedHexColor.length) + incrementedHexColor;
+        
+        return incrementedHexColor;
+    }
+    
+    // Example usage
+    var originalColor = selectedColor;
+    var incrementValue = 10;
+    var incrementedColor = incrementHexColor(originalColor, incrementValue);
+    console.log(incrementedColor); // Output: '#ff666b'
 
       return (
         <group {...props}>
@@ -47,7 +76,13 @@ const HeadModel = ({ selectedColor, map, mousemove = true, ...props }: HeadModel
           />
           <PointsLoader
             model={eyes}
-            selectedColor={selectedColor}
+            selectedColor={incrementedColor}
+            map={map}
+            mousemove={mousemove}
+          />
+          <PointsLoader
+            model={hair}
+            selectedColor={incrementedColor}
             map={map}
             mousemove={mousemove}
           />
