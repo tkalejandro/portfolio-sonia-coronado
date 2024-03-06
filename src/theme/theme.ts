@@ -113,6 +113,13 @@ const customTheme = {
       contrastText: '#000000',
     },
   },
+  components: {
+    Heading: {
+      baseStyle: {
+        fontWeight: 'normal', // Adiciona esta linha para definir o fontWeight como normal
+      },
+    },
+  },
 };
 
 /**

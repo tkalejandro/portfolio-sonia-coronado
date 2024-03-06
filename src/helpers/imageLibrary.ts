@@ -43,6 +43,26 @@ class ImageLibrary {
   cod_1 = () => {
     return 'images/cod_1.jpeg';
   };
+
+  /**
+   * Logo IMDB
+   */
+  imdb = () => 'images/IMDb_Logo_Square_Gold.png';
+
+  /**
+   * Play Station
+   */
+  playstation = () => 'images/playstation_blog.jpg';
+
+  /**
+   * University Southern California
+   */
+  usc = () => 'images/usc_logo.jpg';
+
+  /**
+   * Develop Conference
+   */
+  develop = () => 'images/develop.png';
 }
 
 const imageLibrary = new ImageLibrary();

@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# About the project
 
-## Getting Started
+The goal of this project is to build a portfolio for the client Sonia Coronado, who is a music composer from the video game industry.
 
-First, run the development server:
+## Purpose
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Showcase their work: Display a curated selection of their music compositions and sound designs for various video games.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Highlight Experience: Share their experience, collaborations, and achievements in the video game industry.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Attract Collaborations: Attract potential clients, game developers, and industry professionals for future collaborations.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Keywords
 
-## Learn More
+- Neutral
+- Calm
+- Fair / Correct
+- Reserve
+- Adventorous
+- Music
+- Films
+- Clean
 
-To learn more about Next.js, take a look at the following resources:
+## Technical requirements
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The project should show case this 3 features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- 3D Portfolio (R3F)
+- HTML Portfolio (Next UI)
+- Contact (Next/api)
+- SEO friendly
 
-## Deploy on Vercel
+The user should have the ability to experience the portfolio in a 3D or normal environment.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The project should be able to be render in Safari (HIGH PRIORITY) and Google Chrome.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Mobile First Approach.
+
+## 3D World requirments
+
+...

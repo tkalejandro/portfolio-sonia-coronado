@@ -78,35 +78,7 @@ const TestExperience = () => {
               <meshStandardMaterial transparent opacity={o} />
             </animated.mesh>
           </animated.group> */}
-          <Flex size={[5, 5, 1]} flexDirection="column">
-            <Box centerAnchor marginBottom={0.05}>
-              <ThreeDButton text="Button 1" color="primary" />
-            </Box>
-
-            <Box centerAnchor marginBottom={0.05}>
-              <ThreeDButton text="Button 1" color="secondary" />
-            </Box>
-            <Box centerAnchor marginBottom={0.05}>
-              <ThreeDButton text="Button 1" color="danger" />
-            </Box>
-
-            <Box centerAnchor marginBottom={0.05}>
-              <ThreeDButton text="Button 1" color="success" />
-            </Box>
-            <Box centerAnchor marginBottom={0.05}>
-              <ThreeDButton text="Button 1" color="info" />
-            </Box>
-            <Box centerAnchor marginBottom={0.05}>
-              <ThreeDButton text="Button 1" color="white" />
-            </Box>
-            <Box centerAnchor marginBottom={0.05}>
-              <ThreeDButton text="Button 1" color="black" />
-            </Box>
-            <Box centerAnchor marginBottom={0.05}>
-              <ThreeDButton text="Button 1" />
-            </Box>
-          </Flex>
-
+          <MediaCoverageScene position={[0, 0, 0]} />
           {/* UNTIL HERE */}
         </Canvas>
       </SoundManager>

@@ -4,6 +4,7 @@ const resume: Resume = {
   name: 'Sonia Coronado Cuesta',
   email: 'scoronadocuesta@gmail.com',
   phone: '(857) 200-6930',
+  linkedin: 'https://www.linkedin.com/in/sonia-coronado-cuesta-87166a1b1/',
   summary:
     'Seasoned music designer currently working at PlayStation. Career spans six years with experience in game audio music leadership, cross-disciplinary creative collaborations between composers, dialogue designers, and sound designers, and developing editing and implementation resources. Shipped multiple AAA titles as a key contributor for audio teams in design and lead roles. Skilled in vision-keeping, process improvement for game music production, recording pipelines, and technical music design.',
   projects: [
@@ -51,8 +52,8 @@ const resume: Resume = {
   experience: [
     {
       id: 1,
-      title: 'Senior Music Designer at PlayStation Studios Creative Arts (June 2019 to present)',
-      entity: 'PlayStation',
+      title: 'Senior Music Designer',
+      entity: 'PlayStation Studios™ Creative Arts',
       startDate: new Date('2019-06-01'),
       endDate: undefined, // Ongoing
       explanation:
@@ -99,7 +100,8 @@ const resume: Resume = {
       entity: 'University of Southern California',
       startDate: new Date('2019-01-01'),
       endDate: new Date('2019-12-31'),
-      country: 'USA',
+      country: 'CA',
+      city: 'Los Angeles',
       online: false,
       subtitle: 'Screen Scoring',
     },
@@ -109,7 +111,8 @@ const resume: Resume = {
       entity: 'Berklee College of Music',
       startDate: new Date('2018-01-01'),
       endDate: new Date('2018-12-31'),
-      country: 'USA',
+      country: 'MA',
+      city: 'Boston',
       online: false,
       subtitle: 'Film Scoring and Performance',
     },

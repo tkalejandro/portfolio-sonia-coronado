@@ -12,6 +12,11 @@ interface Resume {
   email: string;
 
   /**
+   * LinkedIn URL
+   */
+  linkedin: string;
+
+  /**
    * Persons phone
    */
   phone: string;
