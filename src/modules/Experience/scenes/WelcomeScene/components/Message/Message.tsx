@@ -1,12 +1,12 @@
 import { fontLibrary } from '@/helpers';
 import { useAppBreakpoints, useAppTheme } from '@/hooks';
 import { useAppSettings } from '@/store';
-import { Text, useAspect } from '@react-three/drei';
+import { Cloud, Clouds, Text, useAspect } from '@react-three/drei';
 import { useThree } from '@react-three/fiber';
 import { Flex, Box } from '@react-three/flex';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSpring, animated, config } from '@react-spring/three';
-
+import * as THREE from 'three';
 const Message = () => {
   const theme = useAppTheme();
   const { isDesktop } = useAppBreakpoints();
@@ -88,6 +88,27 @@ const Message = () => {
           )}
         </Box>
       </Flex>
+      <Clouds material={THREE.MeshBasicMaterial}>
+        <Cloud
+          seed={1}
+          opacity={opacity}
+          segments={10}
+          bounds={[1, 0.5, 0.5]}
+          volume={20}
+          speed={0.1}
+          color={theme.colors.primary[100]}
+        />
+        <Cloud
+          opacity={opacity}
+          seed={1}
+          scale={1}
+          segments={4}
+          volume={10}
+          speed={0.1}
+          color={theme.colors.primary[800]}
+          fade={100}
+        />
+      </Clouds>
     </group>
   );
 };
