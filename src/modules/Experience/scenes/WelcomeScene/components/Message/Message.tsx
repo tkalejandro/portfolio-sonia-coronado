@@ -90,22 +90,22 @@ const Message = () => {
       </Flex>
       <Clouds material={THREE.MeshBasicMaterial}>
         <Cloud
-          seed={0.75}
+          seed={1}
           opacity={opacity}
-          //scale={1}
-          segments={40}
-          bounds={[10, 2, 2]}
-          volume={10}
-          speed={0.15}
-          color={theme.colors.secondary[100]}
+          segments={10}
+          bounds={[1, 0.5, 0.5]}
+          volume={20}
+          speed={0.1}
+          color={theme.colors.primary[100]}
         />
         <Cloud
           opacity={opacity}
           seed={1}
-          scale={2}
-          volume={5}
-          speed={0.15}
-          color={theme.colors.success[500]}
+          scale={1}
+          segments={4}
+          volume={10}
+          speed={0.1}
+          color={theme.colors.primary[800]}
           fade={100}
         />
       </Clouds>
