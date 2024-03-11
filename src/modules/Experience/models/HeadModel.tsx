@@ -36,8 +36,8 @@ const HeadModel = ({ selectedColor, map, mousemove = true, ...props }: HeadModel
       // @ts-ignore
       const eyes = gltfScene.children[2].geometry.clone();
       // @ts-ignore
-      const hair = gltfScene.children[4].geometry.clone();
-      console.log(selectedColor)
+      const hair = gltfScene.children[1].geometry.clone();
+      // console.log(selectedColor)
       const incrementHexColor = (hexColor: any, increment: any) => {
         // Remove the '#' from the beginning of the hex color
         hexColor = hexColor.replace('#', '');
@@ -76,13 +76,13 @@ const HeadModel = ({ selectedColor, map, mousemove = true, ...props }: HeadModel
           />
           <PointsLoader
             model={eyes}
-            selectedColor={incrementedColor}
+            selectedColor={selectedColor}
             map={map}
             mousemove={mousemove}
           />
           <PointsLoader
             model={hair}
-            selectedColor={incrementedColor}
+            selectedColor={selectedColor}
             map={map}
             mousemove={mousemove}
           />
