@@ -36,6 +36,11 @@ const Message = () => {
     );
   };
 
+  useEffect(() => {
+    // Solve the scroll bug in production
+    window.scrollTo(0, 1);
+  }, [])
+
   return (
     <group>
       <Flex
