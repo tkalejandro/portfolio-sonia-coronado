@@ -69,7 +69,7 @@ const TestExperience = () => {
           {/* ADD YOUR SCENE CONTROLS OR LIGHTS HERE */}
           <MainLight />
           <ambientLight intensity={0.5} />
-
+          <ContactScene position={[0, 0, 0]} />
           {/* <Environment preset="sunset" /> */}
           <OrbitControls />
           {/* <animated.group scale={scale} onClick={() => setActive(!active)} ref={myMesh}>
@@ -78,7 +78,7 @@ const TestExperience = () => {
               <meshStandardMaterial transparent opacity={o} />
             </animated.mesh>
           </animated.group> */}
-          <MediaCoverageScene position={[0, 0, 0]} />
+          {/* <MediaCoverageScene position={[0, 0, 0]} /> */}
           {/* UNTIL HERE */}
         </Canvas>
       </SoundManager>

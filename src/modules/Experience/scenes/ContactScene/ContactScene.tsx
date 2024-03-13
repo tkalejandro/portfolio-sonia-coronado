@@ -1,11 +1,13 @@
 import React, { useRef, useState } from 'react';
 import { useFrame, Vector3 } from '@react-three/fiber';
-import { Center, Float, Text, Text3D } from '@react-three/drei';
+import { Center, Float, Text, Text3D, useGLTF } from '@react-three/drei';
 import { soniaCoronado } from '@/constants';
 import { fontLibrary } from '@/helpers';
-import { IphoneX } from '../../models';
+import { TreeSpruce } from '../../models';
 import { useControls } from 'leva';
-import { useAppBreakpoints } from '@/hooks';
+import { useAppBreakpoints, useAppTheme } from '@/hooks';
+import { Group, Mesh, PlaneGeometry } from 'three';
+import * as THREE from 'three';
 
 interface ContactSceneProps {
   position: Vector3;
@@ -21,48 +23,63 @@ interface ContactSceneProps {
  */
 const ContactScene = ({ position }: ContactSceneProps) => {
   const { email, phone } = soniaCoronado;
-
+  const theme = useAppTheme();
   const { isTablet, isBigTablet } = useAppBreakpoints();
 
-  let scale = 1;
-  if (isBigTablet) {
-    scale = 1.5;
-  } else if (isTablet) {
-    scale = 1.2;
-  }
+  const Land = () => {
+    const fogRef = useRef<Mesh>(null);
 
-  const iPhone = useControls('iPhone', {
-    position: { value: [0, -1, -0.6], step: 0.05 },
-    rotation: { value: [0, 0, 0], step: 0.05 },
-    scale: { value: 0.65, step: 0.05 },
-  });
+    useFrame(({ scene }) => {
+      // Manipulate fog properties
+      scene.fog = new THREE.FogExp2(0x000000, 0.05); // Color, Density
+    });
+
+    return (
+      <mesh
+        receiveShadow
+        castShadow
+        ref={fogRef}
+        rotation={[-Math.PI / 2, 0, Math.PI]}
+        position={[0, -1, 0]}
+      >
+        <planeGeometry args={[10, 10]} />
+        <meshStandardMaterial color={theme.colors.success[500]} />
+      </mesh>
+    );
+  };
+
+  const Trees = () => {
+    const bigTreeRef = useRef<Group>(null);
+    const mediumTreeRef = useRef<Group>(null);
+
+    useFrame((state, delta) => {
+      if (bigTreeRef && bigTreeRef.current) {
+        console.log('I happen??');
+        bigTreeRef.current.position.x += 10;
+      }
+    });
+    return (
+      <group>
+        <TreeSpruce
+          ref={bigTreeRef}
+          castShadow
+          position={[isBigTablet ? -1.25 : isTablet ? -1 : -0.5, -0.98, 0]}
+          scale={0.1}
+          rotation={[0, -0.5, 0]}
+        />
+        <TreeSpruce
+          ref={mediumTreeRef}
+          castShadow
+          position={[isBigTablet ? -0.3 : isTablet ? -0.2 : -0.1, -0.98, -1]}
+          scale={0.1}
+        />
+      </group>
+    );
+  };
   return (
-    <group position={position} scale={scale}>
-      <Float rotationIntensity={1.5}>
-        <group position={iPhone.position} rotation={iPhone.rotation} scale={iPhone.scale}>
-          <IphoneX />
-        </group>
-      </Float>
-      <Text
-        font={fontLibrary.montserrat.semiBold}
-        fontSize={0.1}
-        position={[0, 0, 0]}
-        rotation-y={0}
-        maxWidth={2.5}
-      >
-        {email}
-        <meshNormalMaterial />
-      </Text>
-      <Text
-        font={fontLibrary.montserrat.semiBold}
-        fontSize={0.1}
-        position={[0, -0.5, 0]}
-        rotation-y={0}
-        maxWidth={2.5}
-      >
-        {phone}
-        <meshNormalMaterial />
-      </Text>
+    <group position={position}>
+      <Land />
+      <Trees />
     </group>
   );
 };
