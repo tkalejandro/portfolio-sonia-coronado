@@ -33,7 +33,6 @@ const Experience = () => {
     addMusicPosition,
     aboutPosition,
     projectsAwardsPosition,
-    audioLibraryPosition,
     mediaCoveragePosition,
     contactPosition,
   } = useControls('Layout Location', {
@@ -41,8 +40,8 @@ const Experience = () => {
     addMusicPosition: { value: [0, -3.5, 0], step: 0.5 },
     aboutPosition: { value: [0, -6.5, 0], step: 0.5 },
     projectsAwardsPosition: { value: [0, -12, 0], step: 0.5 },
-    audioLibraryPosition: { value: [0, -18, 0], step: 0.5 },
-    mediaCoveragePosition: { value: [0, -22, 0], step: 0.5 },
+    //audioLibraryPosition: { value: [0, -18, 0], step: 0.5 },
+    mediaCoveragePosition: { value: [0, -18, 0], step: 0.5 },
     contactPosition: { value: [0, -30, 0], step: 0.5 },
   });
 
@@ -79,7 +78,7 @@ const Experience = () => {
                     scenePositionY={welcomePosition[1] + addMusicPosition[1]}
                   />
                   <ProjectsAwardsScene position={projectsAwardsPosition} />
-                  <AudioLibraryScene position={audioLibraryPosition} />
+                  {/* <AudioLibraryScene position={audioLibraryPosition} /> */}
                   <MediaCoverageScene position={mediaCoveragePosition} />
                   <ContactScene position={contactPosition} />
                 </ScrollControls>

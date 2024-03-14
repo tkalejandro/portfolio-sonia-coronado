@@ -5,15 +5,15 @@ import { GroupProps } from '@react-three/fiber';
 
 interface ModelProps extends GroupProps {}
 /**
- * Tree spruce
+ * Wooden Sign
  * Requires light.
- * Created by: Alaric.Baraou
+ * Created by: iPoly3D
  * [CCO] (https://creativecommons.org/public-domain/cc0/)
- * via Market Pmnd (https://market.pmnd.rs/model/tree-spruce)
+ * via Poly Pizza (https://poly.pizza/m/p4TB5SdPsG)
  */
-const TreeSpruce = forwardRef<Group, ModelProps>((props, ref) => {
+const WoodenSignIPoly3D = forwardRef<Group, ModelProps>((props, ref) => {
   const [gltfScene, setGltfScene] = useState<Group<Object3DEventMap> | null>(null);
-  const { scene } = useGLTF('/models/treeSpruce.gltf');
+  const { scene } = useGLTF('/models/WoodenSign.glb');
 
   useEffect(() => {
     setGltfScene(scene);
@@ -39,7 +39,7 @@ const TreeSpruce = forwardRef<Group, ModelProps>((props, ref) => {
   return cachedModel;
 });
 
-export default TreeSpruce;
+export default WoodenSignIPoly3D;
 
 // Optionally preload the model
-useGLTF.preload('/models/treeSpruce.gltf');
+useGLTF.preload('/models/WoodenSign.glb');

@@ -24,11 +24,17 @@ const Forest = React.memo(({ ...props }: ForestProps) => {
       smallestTreeRef.current
     ) {
       const time = state.clock.elapsedTime; // Get elapsed time
-      const rotationFactor = Math.sin(time); // Calculate rotation factor
-      bigTreeRef.current.rotation.z = rotationFactor * 0.01;
-      mediumTreeRef.current.rotation.z = rotationFactor * 0.02;
-      smallTreeRef.current.rotation.z = rotationFactor * 0.03;
-      smallestTreeRef.current.rotation.z = rotationFactor * 0.04;
+
+      // Apply different phase shifts to create variations in rotation speed
+      const rotationFactorBig = Math.sin(time * 0.5);
+      const rotationFactorMedium = Math.sin(time * 0.7);
+      const rotationFactorSmall = Math.sin(time * 0.9);
+      const rotationFactorSmallest = Math.sin(time * 1.1);
+      // Apply different rotation speeds to each tree
+      bigTreeRef.current.rotation.z = rotationFactorBig * 0.01;
+      mediumTreeRef.current.rotation.z = rotationFactorMedium * 0.01;
+      smallTreeRef.current.rotation.z = rotationFactorSmall * 0.01;
+      smallestTreeRef.current.rotation.z = rotationFactorSmallest * 0.01;
     }
   });
   return (
