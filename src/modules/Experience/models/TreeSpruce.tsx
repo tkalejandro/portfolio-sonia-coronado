@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, forwardRef } from 'react';
 import { useGLTF } from '@react-three/drei';
 import { Group, Object3DEventMap } from 'three';
 import { GroupProps } from '@react-three/fiber';
@@ -11,7 +11,7 @@ interface ModelProps extends GroupProps {}
  * [CCO] (https://creativecommons.org/public-domain/cc0/)
  * via Market Pmnd (https://market.pmnd.rs/model/iphone-x)
  */
-const TreeSpruce = ({ ...props }: ModelProps) => {
+const TreeSpruce = forwardRef<Group, ModelProps>((props, ref) => {
   const [gltfScene, setGltfScene] = useState<Group<Object3DEventMap> | null>(null);
   const { scene } = useGLTF('/models/treeSpruce.gltf');
 
@@ -27,7 +27,7 @@ const TreeSpruce = ({ ...props }: ModelProps) => {
   const cachedModel = useMemo(() => {
     if (gltfScene) {
       return (
-        <group {...props}>
+        <group ref={ref} {...props}>
           <primitive object={gltfScene.clone()} />
         </group>
       );
@@ -37,7 +37,7 @@ const TreeSpruce = ({ ...props }: ModelProps) => {
   }, [props, gltfScene]);
 
   return cachedModel;
-};
+});
 
 export default TreeSpruce;
 
