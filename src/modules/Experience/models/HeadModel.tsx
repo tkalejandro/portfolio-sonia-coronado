@@ -13,11 +13,11 @@ interface HeadModelProps extends GroupProps {
 
 const HeadModel = ({ selectedColor, map, mousemove = true, ...props }: HeadModelProps) => {
   const [gltfScene, setGltfScene] = useState<Group<Object3DEventMap> | null>(null);
-  const [gltfScene1, setGltfScene1] = useState<Group<Object3DEventMap> | null>(null);
+  // const [gltfScene1, setGltfScene1] = useState<Group<Object3DEventMap> | null>(null);
 
   const { scene } = useGLTF('/models/head-4.glb');
-  const head = useGLTF('/models/cone.glb')
-  console.log(gltfScene)
+  // const head = useGLTF('/models/cone.glb')
+  // console.log(gltfScene)
 
   useEffect(() => {
     setGltfScene(scene);
@@ -59,12 +59,6 @@ const HeadModel = ({ selectedColor, map, mousemove = true, ...props }: HeadModel
         
         return incrementedHexColor;
     }
-    
-    // Example usage
-    var originalColor = selectedColor;
-    var incrementValue = 10;
-    var incrementedColor = incrementHexColor(originalColor, incrementValue);
-    console.log(incrementedColor); // Output: '#ff666b'
 
       return (
         <group {...props}>
