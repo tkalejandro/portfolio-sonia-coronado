@@ -42,6 +42,7 @@ const Forest = React.memo(({ ...props }: ForestProps) => {
       <TreeSpruce
         ref={bigTreeRef}
         castShadow
+        receiveShadow
         position={[0, -0.98, -0.2]}
         scale={0.12}
         rotation={[0, -0.5, 0]}
@@ -50,6 +51,7 @@ const Forest = React.memo(({ ...props }: ForestProps) => {
       <TreeSpruce
         ref={smallTreeRef}
         castShadow
+        receiveShadow
         position={[0.7, -0.98, -0.75]}
         scale={0.08}
         rotation={[0, -0.5, 0]}

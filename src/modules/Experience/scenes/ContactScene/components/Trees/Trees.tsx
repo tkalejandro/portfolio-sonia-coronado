@@ -25,6 +25,7 @@ const Trees = () => {
       <TreeSpruce
         ref={bigTreeRef}
         castShadow
+        receiveShadow
         position={[isBigTablet ? -1.25 : isTablet ? -1 : -0.5, -0.98, 0]}
         scale={0.1}
         rotation={[0, -0.5, 0]}
@@ -32,6 +33,7 @@ const Trees = () => {
       <TreeSpruce
         ref={mediumTreeRef}
         castShadow
+        receiveShadow
         position={[isBigTablet ? -0.3 : isTablet ? -0.2 : -0.1, -0.98, -1]}
         scale={0.1}
       />
