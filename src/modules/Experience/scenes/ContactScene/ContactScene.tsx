@@ -1,11 +1,13 @@
-import React, { useRef, useState } from 'react';
-import { useFrame, Vector3 } from '@react-three/fiber';
-import { Center, Float, Text, Text3D } from '@react-three/drei';
+import React from 'react';
+import { Vector3 } from '@react-three/fiber';
+import { Text } from '@react-three/drei';
 import { soniaCoronado } from '@/constants';
 import { fontLibrary } from '@/helpers';
-import { IphoneX } from '../../models';
-import { useControls } from 'leva';
-import { useAppBreakpoints } from '@/hooks';
+import { WoodenSignIPoly3D } from '../../models';
+import { useAppBreakpoints, useAppTheme } from '@/hooks';
+import { Forest, Land, Trees } from './components';
+import { useRouter } from 'next/navigation';
+import { EnhancedGroup, InvisibleMesh } from '../../components';
 
 interface ContactSceneProps {
   position: Vector3;
@@ -13,56 +15,85 @@ interface ContactSceneProps {
 
 /**
  * Shows the contact information
- * Refer this link for some help:
- * https://codesandbox.io/p/sandbox/text3d-alignment-x6obrb?file=%2Fsrc%2FApp.js
- * https://gero3.github.io/facetype.js/
- * https://threejs.org/docs/index.html?q=textg#examples/en/geometries/TextGeometry
- *
  */
 const ContactScene = ({ position }: ContactSceneProps) => {
-  const { email, phone } = soniaCoronado;
-
+  const { email, phone, linkedin } = soniaCoronado;
+  const router = useRouter();
+  const theme = useAppTheme();
   const { isTablet, isBigTablet } = useAppBreakpoints();
+  const openLinkedIn = () => {
+    window.open(linkedin, '_blank');
+  };
 
-  let scale = 1;
-  if (isBigTablet) {
-    scale = 1.5;
-  } else if (isTablet) {
-    scale = 1.2;
-  }
+  const openResume = () => {
+    router.push('/resume');
+  };
 
-  const iPhone = useControls('iPhone', {
-    position: { value: [0, -1, -0.6], step: 0.05 },
-    rotation: { value: [0, 0, 0], step: 0.05 },
-    scale: { value: 0.65, step: 0.05 },
-  });
+  const openEmail = () => {
+    const mailtoLink = `mailto:${email}?subject=Contact Request - Portfolio Sonia Coronado`;
+    //Open external Mail App
+    window.location.href = mailtoLink;
+  };
+
+  const openPhone = () => {
+    const phoneto = `tel:${phone}`;
+    window.location.href = phoneto;
+  };
+
   return (
-    <group position={position} scale={scale}>
-      <Float rotationIntensity={1.5}>
-        <group position={iPhone.position} rotation={iPhone.rotation} scale={iPhone.scale}>
-          <IphoneX />
+    <group position={position}>
+      <Land />
+      <Trees />
+      <Forest position={[isTablet ? 1.5 : 1, 0, -0.6]} rotation={[0, 0.25, 0]} />
+      {isTablet && (
+        <>
+          <Forest position={[isTablet ? 3.75 : 1, 0, -0.6]} rotation={[0, 2, 0]} />
+          <Forest position={[isTablet ? 6 : 1, 0, -0.6]} rotation={[0, 3, 0]} />
+          <Forest position={[isTablet ? -2.75 : 1, 0, -1]} rotation={[0, -2, 0]} />
+          <Forest position={[isTablet ? -6 : 1, 0, -0.6]} rotation={[0, 0.1, 0]} />
+        </>
+      )}
+
+      <group position={[0, -1, 0.75]} scale={0.55} rotation={[0, -0.25, 0]}>
+        <WoodenSignIPoly3D />
+        <EnhancedGroup onClick={openLinkedIn}>
+          <Text
+            scale={0.12}
+            font={fontLibrary.montserrat.extraBold}
+            position={[-0.14, 1.69, 0.025]}
+          >
+            LinkedIn
+          </Text>
+        </EnhancedGroup>
+        <group position={[0, -0.03, 0]}>
+          <Text scale={0.09} font={fontLibrary.montserrat.extraBold} position={[0.05, 1.37, 0.025]}>
+            Sonia Coronado:
+          </Text>
+          <EnhancedGroup onClick={openEmail}>
+            <Text
+              scale={0.05}
+              font={fontLibrary.montserrat.extraBold}
+              position={[0.05, 1.24, 0.025]}
+            >
+              {email}
+            </Text>
+          </EnhancedGroup>
+          <EnhancedGroup onClick={openPhone}>
+            <Text
+              scale={0.05}
+              font={fontLibrary.montserrat.extraBold}
+              position={[0.05, 1.12, 0.025]}
+            >
+              {phone}
+            </Text>
+          </EnhancedGroup>
         </group>
-      </Float>
-      <Text
-        font={fontLibrary.montserrat.semiBold}
-        fontSize={0.1}
-        position={[0, 0, 0]}
-        rotation-y={0}
-        maxWidth={2.5}
-      >
-        {email}
-        <meshNormalMaterial />
-      </Text>
-      <Text
-        font={fontLibrary.montserrat.semiBold}
-        fontSize={0.1}
-        position={[0, -0.5, 0]}
-        rotation-y={0}
-        maxWidth={2.5}
-      >
-        {phone}
-        <meshNormalMaterial />
-      </Text>
+        <EnhancedGroup onClick={openResume}>
+          <Text scale={0.12} font={fontLibrary.montserrat.extraBold} position={[0.03, 0.76, 0.025]}>
+            Resume
+          </Text>
+        </EnhancedGroup>
+      </group>
     </group>
   );
 };
