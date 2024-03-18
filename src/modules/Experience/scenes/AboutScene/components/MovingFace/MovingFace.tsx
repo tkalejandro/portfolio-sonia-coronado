@@ -33,7 +33,6 @@ const MovingFace = ({ scenePositionY, selectedColor }: MovingFaceProps) => {
     rotationIntensityY: { value: 0.2, step: 0.001, min: 0.001, max: 2 },
   });
 
-  // const [mouseCoordinates, setMouseCoordinates] = useState()
 
   let mouse;
   // follow mouse movment by @tkalejandro
@@ -70,7 +69,6 @@ const MovingFace = ({ scenePositionY, selectedColor }: MovingFaceProps) => {
         <HeadModel
           selectedColor={selectedColor}
           map={musicNoteMap}
-          mouse={mouse}
           //Only move when is desktop.
           mousemove={isDesktop}
         />
