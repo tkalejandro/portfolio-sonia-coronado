@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Color, useFrame } from '@react-three/fiber';
 import { Mesh } from 'three';
 import { useControls } from 'leva';
@@ -33,6 +33,9 @@ const MovingFace = ({ scenePositionY, selectedColor }: MovingFaceProps) => {
     rotationIntensityY: { value: 0.2, step: 0.001, min: 0.001, max: 2 },
   });
 
+  // const [mouseCoordinates, setMouseCoordinates] = useState()
+
+  let mouse;
   // follow mouse movment by @tkalejandro
   useFrame((state, delta) => {
     if (!isDesktop) {
@@ -41,7 +44,7 @@ const MovingFace = ({ scenePositionY, selectedColor }: MovingFaceProps) => {
     }
 
     // Mouse coordinates from -1 to 1
-    const mouse = state.pointer;
+    mouse = state.pointer;
 
     const mouseX = mouse.x;
     const mouseY = mouse.y;
@@ -67,6 +70,7 @@ const MovingFace = ({ scenePositionY, selectedColor }: MovingFaceProps) => {
         <HeadModel
           selectedColor={selectedColor}
           map={musicNoteMap}
+          mouse={mouse}
           //Only move when is desktop.
           mousemove={isDesktop}
         />
