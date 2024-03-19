@@ -16,7 +16,7 @@ const AboutScene = ({ position, scenePositionY }: AboutSceneProps) => {
 
   // This reference will give us direct access to the mesh
   const meshRef = useRef<THREE.Mesh>(null);
-  const [selectedColor, setSelectedColor] = useState<Color>(theme.colors.grey);
+  const [selectedColor, setSelectedColor] = useState<Color>(theme.colors.primary.main);
 
   // Subscribe this component to the render-loop, rotate the mesh every frame
   useFrame((state, delta) => {
