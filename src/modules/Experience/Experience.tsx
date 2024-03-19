@@ -5,7 +5,6 @@ import { PerformanceMonitor, ScrollControls } from '@react-three/drei';
 import {
   AboutScene,
   AddMusicScene,
-  AudioLibraryScene,
   ContactScene,
   MediaCoverageScene,
   WelcomeScene,
@@ -72,7 +71,7 @@ const Experience = () => {
             <Canvas flat dpr={dpr}>
               <PerformanceMonitor onIncline={() => setDpr(2)} onDecline={() => setDpr(1)}>
                 <ScrollControls
-                  pages={isBigTablet ? 4 : 10}
+                  pages={isBigTablet ? 4 : 6}
                   distance={distance}
                   eps={0.00001}
                   enabled={experienceLoaded}
