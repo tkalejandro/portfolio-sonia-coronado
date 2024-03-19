@@ -64,7 +64,6 @@ const MediaCard = ({ title, image, description, url }: MediaProps) => {
   const openNewTab = () => {
     window.open(url, '_blank');
   };
-
   return (
     <EnhancedGroup onClick={openNewTab}>
       <Box
@@ -92,13 +91,14 @@ const MediaCard = ({ title, image, description, url }: MediaProps) => {
             position={[-0.859, 0, 0]}
             textAlign="left"
             maxWidth={20}
-            scale={0.06}
-            font={fontLibrary.montserrat.light}
-            color={theme.colors.grey}
+            scale={0.085}
+            font={fontLibrary.montserrat.thin}
+            color={theme.colors.black}
           >
             {description}
           </Text>
         </Box>
+
         <Box marginTop={0.75}>
           <mesh
             ref={ref}

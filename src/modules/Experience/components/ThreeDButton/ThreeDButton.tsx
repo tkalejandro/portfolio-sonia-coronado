@@ -114,7 +114,7 @@ const ThreeDButton = ({
   return (
     <group
       {...props}
-      scale={[buttonScale, buttonScale, 1]}
+      scale={props.scale ?? [buttonScale, buttonScale, 1]}
       onPointerEnter={() => {
         document.body.style.cursor = 'pointer';
       }}

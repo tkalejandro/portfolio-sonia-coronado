@@ -10,7 +10,8 @@ const mediaData: MediaData[] = [
   },
   {
     title: 'Develop: Brighton',
-    description: 'Conference for global game developers to connect, innovate, and inspire seaside.',
+    description:
+      'Inspirational conference for global game developers to connect, innovate, and share experiences.',
     url: 'https://www.developconference.com/speakers/sonia-coronado',
     srcImg: imageLibrary.develop(),
   },

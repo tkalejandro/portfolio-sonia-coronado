@@ -7,7 +7,7 @@ import { ThreeDButton } from '../../components';
 import { Phase } from '@/enums/Experience';
 import gsap from 'gsap';
 import { loaderFragmentShader, loaderVertexShader } from '../../shaders/loaderShader';
-import { useAppTheme } from '@/hooks';
+import { useAppBreakpoints, useAppTheme } from '@/hooks';
 import { useAppSettings } from '@/store';
 
 interface WelcomeSceneProps {
@@ -18,7 +18,7 @@ const WelcomeScene = ({ position }: WelcomeSceneProps) => {
   //Tweek! to keep distance factor and solve bug of button
   // 10 is default
   const [distanceFactor, setDistanceFactor] = useState<undefined | number>(10);
-
+  const { isBigTablet, isTablet } = useAppBreakpoints();
   const theme = useAppTheme();
 
   const buttonRef = useRef<Group>(null!);
@@ -44,7 +44,7 @@ const WelcomeScene = ({ position }: WelcomeSceneProps) => {
 
   useFrame((state, delta) => {
     if (phase === Phase.Playing) {
-      if (time > 2) {
+      if (time > 1) {
         setExperienceLoaded(true);
         return;
       }
@@ -102,7 +102,13 @@ const WelcomeScene = ({ position }: WelcomeSceneProps) => {
       {/* Appears after some seconds */}
       <Message />
       <group position={position} ref={buttonRef}>
-        <ThreeDButton text="Play" size="lg" onClick={playButton} color="primary" />
+        <ThreeDButton
+          text="Play"
+          size="lg"
+          onClick={playButton}
+          color="primary"
+          scale={isBigTablet ? [1.5, 1.5, 1] : [1.8, 1.8, 1]}
+        />
       </group>
     </>
   );
