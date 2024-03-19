@@ -45,9 +45,9 @@ const PointsLoader = ({ model, selectedColor, map, mousemove }: PointsLoaderProp
         vec3 direction = normalize(seg);
         float distance = length(seg);
         // apply force if distance between
-        // mouse and points is lower than 1.5
-        if (distance < 1.5){
-          float force = clamp(1.0 / (distance * distance), -0., .2);
+        // mouse and points is lower than 2.5
+        if (distance < 2.5){
+          float force = clamp(1.0 / (distance * distance), -0.3, .2);
           transformed += direction * log(force) * .25;
           vNormal = force /0.5;
         }
@@ -55,7 +55,7 @@ const PointsLoader = ({ model, selectedColor, map, mousemove }: PointsLoaderProp
     );
   };
   const pointsMesh = new THREE.Points(model, pmaterial);
-  pointsMesh.rotation.y = 3
+  pointsMesh.rotation.y = 3.20
 
   /**
    * Calculate mouse position separately
@@ -63,7 +63,7 @@ const PointsLoader = ({ model, selectedColor, map, mousemove }: PointsLoaderProp
    * around it without worrying about it
    * sticking to the mouse :-)
    */
-  useFrame((state, delta) => {
+  useFrame((state) => {
     const cursor = state.pointer
     const cursorX = -cursor.x
     const cursorY = cursor.y
