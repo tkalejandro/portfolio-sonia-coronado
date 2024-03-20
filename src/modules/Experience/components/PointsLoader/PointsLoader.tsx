@@ -6,9 +6,8 @@ interface PointsLoaderProps {
   model: BufferGeometry<NormalOrGLBufferAttributes>;
   selectedColor: Color;
   map: Texture;
-  mousemove: boolean;
 }
-const PointsLoader = ({ model, selectedColor, map, mousemove }: PointsLoaderProps) => {
+const PointsLoader = ({ model, selectedColor, map }: PointsLoaderProps) => {
   let uniforms = { mousePos: { value: new THREE.Vector3() } };
   const pmaterial = new THREE.PointsMaterial({
     color: new THREE.Color(`${selectedColor}`),
@@ -45,8 +44,8 @@ const PointsLoader = ({ model, selectedColor, map, mousemove }: PointsLoaderProp
         vec3 direction = normalize(seg);
         float distance = length(seg);
         // apply force if distance between
-        // mouse and points is lower than 2.5
-        if (distance < 2.5){
+        // mouse and points is lower than 1.5
+        if (distance < 1.5) {
           float force = clamp(1.0 / (distance * distance), -0.3, .2);
           transformed += direction * log(force) * .25;
           vNormal = force /0.5;
