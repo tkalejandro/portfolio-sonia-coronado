@@ -1,3 +1,4 @@
+import { GameOnHover } from '@/enums/Experience';
 import { fontLibrary, imageLibrary } from '@/helpers';
 import { useAppBreakpoints, useAppTheme } from '@/hooks';
 import { EnhancedImage } from '@/modules/Experience/components';
@@ -9,7 +10,11 @@ import React, { useEffect, useState } from 'react';
 import { Vector3 } from 'three';
 import { SecretButton } from './components';
 
-const Gallery = () => {
+interface GalleryProps {
+  gameOnHover?: GameOnHover;
+}
+
+const Gallery = ({ gameOnHover }: GalleryProps) => {
   const [galleryContainerScale, setGalleryContainerScale] = useState<number>(1);
   const [galleryTransform, setGalleryTransform] = useState<GalleryTransform | null>(null);
   const { isBase, isTablet, isBigTablet, isMobile, isDesktop } = useAppBreakpoints();
@@ -63,7 +68,7 @@ const Gallery = () => {
 
   const { tlou2_1, tlou2_2, god_1, cod_1, cod_2, secret } = galleryTransform;
   const textScale = isDesktop ? 2 : 1;
-
+  console.log(gameOnHover);
   return (
     <group position={[0, 0, -1]}>
       <Flex
@@ -103,6 +108,13 @@ const Gallery = () => {
               scale={tlou2_1.scale}
               position={tlou2_1.position}
               caption="The Last of US Part 2"
+              grayscale={
+                gameOnHover !== undefined
+                  ? gameOnHover === GameOnHover.TLOU2_1
+                    ? 0
+                    : 1
+                  : undefined
+              }
             />
             {/* <Image url={imageLibrary.tlou2_1()} scale={tlou2_1.scale} position={tlou2_1.position} /> */}
             <EnhancedImage
@@ -110,24 +122,40 @@ const Gallery = () => {
               scale={cod_2.scale}
               position={cod_2.position}
               caption="Call of Duty: Modern Warfare"
+              grayscale={
+                gameOnHover !== undefined ? (gameOnHover === GameOnHover.COD_2 ? 0 : 1) : undefined
+              }
             />
             <EnhancedImage
               url={imageLibrary.tlou2_3()}
               scale={tlou2_2.scale}
               position={tlou2_2.position}
               caption="The Last of Us Part: 2"
+              grayscale={
+                gameOnHover !== undefined
+                  ? gameOnHover === GameOnHover.TLOU2_2
+                    ? 0
+                    : 1
+                  : undefined
+              }
             />
             <EnhancedImage
               url={imageLibrary.god_1()}
               scale={god_1.scale}
               position={god_1.position}
               caption="God of War: Ragnarok"
+              grayscale={
+                gameOnHover !== undefined ? (gameOnHover === GameOnHover.GOD_1 ? 0 : 1) : undefined
+              }
             />
             <EnhancedImage
               url={imageLibrary.cod_1()}
               scale={cod_1.scale}
               position={cod_1.position}
               caption="Call of Duty: Modern Warfare"
+              grayscale={
+                gameOnHover !== undefined ? (gameOnHover === GameOnHover.COD_1 ? 0 : 1) : undefined
+              }
             />
             <SecretButton element={secret} />
           </group>

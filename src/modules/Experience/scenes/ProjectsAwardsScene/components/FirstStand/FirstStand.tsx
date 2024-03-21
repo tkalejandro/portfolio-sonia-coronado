@@ -1,11 +1,15 @@
 import React, { useRef, useState } from 'react';
-import { useFrame, Vector3 } from '@react-three/fiber';
-import { Text } from '@react-three/drei';
+
 import { useControls } from 'leva';
 import { TrophyCasey, TrophyCreativeTrio } from '@/modules/Experience/models';
 import { useAppBreakpoints } from '@/hooks';
+import { GameOnHover } from '@/enums/Experience';
 
-const FirstStand = () => {
+interface FirstStandProps {
+  setGameOnHover: (value: GameOnHover | undefined) => void;
+}
+
+const FirstStand = ({ setGameOnHover }: FirstStandProps) => {
   // This reference will give us direct access to the mesh
   const trophyStand = useRef<THREE.Mesh>(null);
 
@@ -20,10 +24,28 @@ const FirstStand = () => {
       position={isBigTablet ? [-1, -2, 0] : standControls.standPosition}
       rotation={isBigTablet ? [0, 0.2, 0] : standControls.standRotation}
     >
-      <TrophyCreativeTrio position={[-0.6, 0.05, 0.14]} scale={1.8} glowOnHover />
-      <TrophyCreativeTrio position={[-0.1, 0.05, 0.14]} scale={1.8} glowOnHover />
+      <TrophyCreativeTrio
+        position={[-0.6, 0.05, 0.14]}
+        scale={1.8}
+        glowOnHover
+        onPointerEnter={() => setGameOnHover(GameOnHover.TLOU2_1)}
+        onPointerLeave={() => setGameOnHover(undefined)}
+      />
+      <TrophyCreativeTrio
+        position={[-0.1, 0.05, 0.14]}
+        scale={1.8}
+        glowOnHover
+        onPointerEnter={() => setGameOnHover(GameOnHover.TLOU2_2)}
+        onPointerLeave={() => setGameOnHover(undefined)}
+      />
 
-      <TrophyCasey position={[0.52, 0.305, 0]} rotation={[0, Math.PI / 2, 0]} glowOnHover />
+      <TrophyCasey
+        position={[0.52, 0.305, 0]}
+        rotation={[0, Math.PI / 2, 0]}
+        glowOnHover
+        onPointerEnter={() => setGameOnHover(GameOnHover.COD_1)}
+        onPointerLeave={() => setGameOnHover(undefined)}
+      />
       <mesh ref={trophyStand}>
         <boxGeometry args={[1.6, 0.1, 0.7]} />
         <meshStandardMaterial />
