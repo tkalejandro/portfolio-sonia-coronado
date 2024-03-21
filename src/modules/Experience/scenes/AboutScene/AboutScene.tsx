@@ -52,7 +52,7 @@ const AboutScene = ({ position, scenePositionY }: AboutSceneProps) => {
           />
 
           <ThreeDButton
-            onClick={() => selectButton(theme.colors.warning.main)}
+            onClick={() => selectButton(theme.colors.warning["900"])}
             position={isBigTablet ? [-0.5, 0.5, 0] : [0.7, 0.5, 0]}
             text="Warning"
             color={selectedColor === theme.colors.warning.main ? 'warning' : 'primary'}

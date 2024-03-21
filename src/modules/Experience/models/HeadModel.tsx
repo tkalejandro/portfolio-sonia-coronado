@@ -42,18 +42,19 @@ const HeadModel = ({ selectedColor, map, mousemove = true, ...props }: HeadModel
             model={head}
             selectedColor={selectedColor}
             map={map}
-
+            mousemove={mousemove}
           />
           <PointsLoader
             model={eyes}
             selectedColor={selectedColor}
             map={map}
-
+            mousemove={mousemove}
           />
           <PointsLoader
             model={hair}
             selectedColor={selectedColor}
             map={map}
+            mousemove={mousemove}
           />
         </group>
       );

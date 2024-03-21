@@ -6,8 +6,9 @@ interface PointsLoaderProps {
   model: BufferGeometry<NormalOrGLBufferAttributes>;
   selectedColor: Color;
   map: Texture;
+  mousemove: boolean;
 }
-const PointsLoader = ({ model, selectedColor, map }: PointsLoaderProps) => {
+const PointsLoader = ({ model, selectedColor, map, mousemove }: PointsLoaderProps) => {
   let uniforms = { mousePos: { value: new THREE.Vector3() } };
   const pmaterial = new THREE.PointsMaterial({
     color: new THREE.Color(`${selectedColor}`),
@@ -63,11 +64,15 @@ const PointsLoader = ({ model, selectedColor, map }: PointsLoaderProps) => {
    * sticking to the mouse :-)
    */
   useFrame((state) => {
+    if(!mousemove) {
+      return
+    }
     const cursor = state.pointer
     const cursorX = -cursor.x
     const cursorY = cursor.y
 
     uniforms.mousePos.value.set(cursorX, cursorY, 0)
+
   })
 
   return <primitive object={pointsMesh} />;
