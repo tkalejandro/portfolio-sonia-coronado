@@ -1,4 +1,4 @@
-import { Color } from '@react-three/fiber';
+import { Color, useFrame } from '@react-three/fiber';
 import { BufferGeometry, NormalOrGLBufferAttributes, Texture } from 'three';
 import * as THREE from 'three';
 
@@ -10,7 +10,6 @@ interface PointsLoaderProps {
 }
 const PointsLoader = ({ model, selectedColor, map, mousemove }: PointsLoaderProps) => {
   let uniforms = { mousePos: { value: new THREE.Vector3() } };
-  const cursor = { x: 0, y: 0 };
   const pmaterial = new THREE.PointsMaterial({
     color: new THREE.Color(`${selectedColor}`),
     size: 0.1,
@@ -47,8 +46,8 @@ const PointsLoader = ({ model, selectedColor, map, mousemove }: PointsLoaderProp
         float distance = length(seg);
         // apply force if distance between
         // mouse and points is lower than 1.5
-        if (distance < 1.5){
-          float force = clamp(1.0 / (distance * distance), -0., .2);
+        if (distance < 1.5) {
+          float force = clamp(1.0 / (distance * distance), -0.3, .2);
           transformed += direction * log(force) * .25;
           vNormal = force /0.5;
         }
@@ -56,27 +55,25 @@ const PointsLoader = ({ model, selectedColor, map, mousemove }: PointsLoaderProp
     );
   };
   const pointsMesh = new THREE.Points(model, pmaterial);
+  pointsMesh.rotation.y = 3.20
 
   /**
-   * Calculate mouse position seperatly
+   * Calculate mouse position separately
    * so we can animate the model while hovering
    * around it without worrying about it
    * sticking to the mouse :-)
    */
-  document.addEventListener(
-    'mousemove',
-    (event) => {
-      if (!mousemove) {
-        // Dont react to this event
-        return;
-      }
-      event.preventDefault();
-      cursor.x = -(event.clientX / window.innerWidth - 0.5);
-      cursor.y = event.clientY / window.innerHeight - 0.5;
-      uniforms.mousePos.value.set(cursor.x, cursor.y, 0);
-    },
-    false,
-  );
+  useFrame((state) => {
+    if(!mousemove) {
+      return
+    }
+    const cursor = state.pointer
+    const cursorX = -cursor.x
+    const cursorY = cursor.y
+
+    uniforms.mousePos.value.set(cursorX, cursorY, 0)
+
+  })
 
   return <primitive object={pointsMesh} />;
 };

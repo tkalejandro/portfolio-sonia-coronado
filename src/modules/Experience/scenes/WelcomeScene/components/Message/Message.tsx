@@ -93,7 +93,7 @@ const Message = () => {
           )}
         </Box>
       </Flex>
-      <Clouds material={THREE.MeshBasicMaterial}>
+      {/* <Clouds material={THREE.MeshBasicMaterial}>
         <Cloud
           seed={1}
           opacity={opacity}
@@ -113,7 +113,7 @@ const Message = () => {
           color={theme.colors.primary[800]}
           fade={100}
         />
-      </Clouds>
+      </Clouds> */}
     </group>
   );
 };
