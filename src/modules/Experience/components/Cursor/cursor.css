@@ -1,0 +1,14 @@
+ .cursor::before {
+    content: 'Hi';
+     width: 2.5rem;
+     height: 2.5rem;
+     border-radius: 50%;
+     text-align: center;
+     display: flex;
+     justify-Content: center;
+     align-items: center;
+     backdrop-filter: blur(10px);
+     background-color: currentColor;
+     /* transform: translate(50%, 50%); */
+     /* z-index: */
+ }

@@ -4,6 +4,7 @@ body {
   background-color: #fffff0;
   font-family: 'Montserrat Variable', sans-serif !important;
   overflow-x: hidden;
+  /* cursor:pro */
 }
 #experience {
   position: fixed;

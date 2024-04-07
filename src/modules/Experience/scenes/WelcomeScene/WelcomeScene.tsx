@@ -28,6 +28,7 @@ const WelcomeScene = ({ position }: WelcomeSceneProps) => {
   const setPhase = useAppSettings((state) => state.setPhase);
   const setExperienceLoaded = useAppSettings((state) => state.setExperienceLoaded);
 
+
   // This trick works because this scene doest need to render again.
   // Normal react this is criminal but we are in R3F.
   let time = 0;

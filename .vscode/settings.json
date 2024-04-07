@@ -18,5 +18,8 @@
         "titleBar.inactiveBackground": "#23165199",
         "titleBar.inactiveForeground": "#e7e7e799"
     },
-    "peacock.color": "#231651"
+    "peacock.color": "#231651",
+    "cSpell.words": [
+        "Chakra"
+    ]
 }
