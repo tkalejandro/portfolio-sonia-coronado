@@ -70,7 +70,6 @@ const Experience = () => {
         <SoundManager>
           <Suspense fallback={<Loader />}>
             <CursorManage>
-              <Cursor />
               <Canvas flat dpr={dpr}>
                 <PerformanceMonitor onIncline={() => setDpr(2)} onDecline={() => setDpr(1)}>
                   <ScrollControls
@@ -79,6 +78,7 @@ const Experience = () => {
                     eps={0.00001}
                     enabled={experienceLoaded}
                   >
+                    <Cursor />
                     <MainCamera />
                     <MainLight />
                     {debugMode && <Perf position="top-left" />}
