@@ -67,9 +67,9 @@ const TestExperience = () => {
             far={4}
           />
           {/* ADD YOUR SCENE CONTROLS OR LIGHTS HERE */}
-          {/* <MainLight />
-          <ambientLight intensity={0.5} /> */}
-          <ContactScene position={[0, 0, 0]} />
+          <MainLight />
+          <ambientLight intensity={0.5} />
+          <ProjectsAwardsScene position={[0, 0, 0]} />
           {/* <Environment preset="sunset" /> */}
           <OrbitControls />
           {/* <animated.group scale={scale} onClick={() => setActive(!active)} ref={myMesh}>
