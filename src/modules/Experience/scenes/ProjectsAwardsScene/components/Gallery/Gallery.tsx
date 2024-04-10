@@ -68,7 +68,7 @@ const Gallery = ({ gameOnHover }: GalleryProps) => {
 
   const { tlou2_1, tlou2_2, god_1, cod_1, cod_2, secret } = galleryTransform;
   const textScale = isDesktop ? 2 : 1;
-  console.log(gameOnHover);
+
   return (
     <group position={[0, 0, -1]}>
       <Flex
