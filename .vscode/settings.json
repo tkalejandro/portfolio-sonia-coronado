@@ -20,6 +20,7 @@
     },
     "peacock.color": "#231651",
     "cSpell.words": [
-        "Chakra"
+        "Chakra",
+        "gsap"
     ]
 }

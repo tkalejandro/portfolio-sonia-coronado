@@ -1,127 +1,144 @@
 // import '@/theme/globals.css';
-import { Html, useScroll } from '@react-three/drei';
+import { Html, shaderMaterial, useScroll, Text } from '@react-three/drei';
 import './cursor.css'
 import * as THREE from 'three'
 import gsap from 'gsap';
-import { easeInOut } from 'framer-motion';
+import { easeIn, easeInOut } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { cursorFragmentShader, cursorVertexShader } from '../../shaders/cursorShader';
-import { textureLibrary } from '@/helpers';
+import { fontLibrary, textureLibrary } from '@/helpers';
 import { NormalBufferAttributes } from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
-import { useColor } from './CursorManager';
+import { useCursor } from './CursorManager';
 
 const Cursor = () => {
     // const circleRef = useRef<THREE.ShaderMaterial>(null)
     // const circleRef = useRef<THREE.Mesh>(null)
     const [position, setPosition] = useState({ x: 0, y: 0 });
-    const { color } = useColor()
+    const { color, hover } = useCursor()
+    console.log(hover)
     const { viewport } = useThree()
   // viewport = canvas in 3d units (meters)
 
   const ref = useRef<THREE.Mesh | any>()
-  let initialY = 0;
-
-  useEffect(() => {
-    // Store the initial y position
-    initialY = ref.current.position.y;
-
-    // Add scroll event listener
-    window.addEventListener('scroll', handleScroll);
-
-    // Remove event listener on component unmount
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  const handleScroll = () => {
-    // Calculate the new y position based on scroll position
-    // const newY = initialY + window.scrollY;
-    initialY = window.scrollY
-
-    // Update the y position of the object
-    // ref.current.position.setY(newY);
-  };
+  const textRef = useRef<THREE.Mesh | any>()
   const scroll = useScroll();
-  useFrame(({ mouse }) => {
-    const x = (mouse.x * viewport.width) / 2
-    const y = (mouse.y * viewport.height) / 2
-    // @ts-ignore
-    ref.current.position.setX(x)
 
+  const windMap = new THREE.TextureLoader().load(textureLibrary.wind().map);
+  windMap.wrapS = THREE.RepeatWrapping
+  windMap.wrapT = THREE.RepeatWrapping
+
+  let divide = 3
+  
+  const planeGeometry = new THREE.PlaneGeometry(1, 1, 16 / (divide + 1), 64 / (divide + 1))
+  // const circleGeometry = new THREE.CircleGeometry(0.5, 50, 0, Math.PI )
+  // const torusGeometry = new THREE.TorusGeometry( 0.05, 3, 16, 100 ) 
+  const torusGeometry = new THREE.TorusGeometry( 0.01, 1, 1.0, 10 ) 
+
+  const planeMaterial = new THREE.ShaderMaterial({
+    vertexShader: cursorVertexShader,
+    fragmentShader: cursorFragmentShader,
+    uniforms: {
+      uTime: new THREE.Uniform(0),
+      uPerlinTexture: new THREE.Uniform(windMap),
+      uFull: new THREE.Uniform(1990.0)
+    },
+    side: THREE.DoubleSide,
+    transparent: true,
+    depthWrite: false
+  })
+  const planeMesh = new THREE.Mesh(torusGeometry, planeMaterial)
+
+  if(ref.current) {
+    // @ts-ignore
+    ref.current.position.z = 0.5
+    // console.log(ref.current)
+    
+  }
+  
+  useFrame((state, delta ) => {
+    const elapsedTime = state.clock.getElapsedTime()
+
+    const x = (state.pointer.x * viewport.width) / 2
+    const y = (state.pointer.y * viewport.height) / 2
+    // setPosition({x:x, y:y})
+    // @ts-ignore
+    // ref.current.position.setX(x)
+    
     let value = scroll.offset;
     if (!isFinite(value)) {
       //Fix the bug when the number is infinity.
       value = 0;
     }
     // @ts-ignore
-    ref.current.position.y = (-value * 30.0) + y
-    // ref.current.rotation.y = -value * 30.0
-    // window.addEventListener('mousemove', () => {
-    //   // @ts-ignore
-    //   ref.current.position.set(x, value += y, 0)
-    // })
-  })
-  // effect once when component mounts
-    // const [ length, setLength ] = useState({
-    //     value: 6.283185307179586
-    // })
-    // let xS = 6.283185307179586
-    // const sphereGeometry = new THREE.CircleGeometry(1, 50, 0, -2)
-    // const sphereMaterial = new THREE.ShaderMaterial({})
-    // const sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial)
-    // console.log(sphereMesh)
-    // gsap.to(length, {value: 0, duration: 0.2})
-    
-    // if(circleRef.current)
-    //     console.log(circleRef.current)  
-    // const musicNoteMap = new THREE.TextureLoader().load(textureLibrary.musicNote().map);
+    // ref.current.position.y = (-value * 30.0) + y
 
-    // useFrame((state, delta) => {
-    //     // if(!mousemove) {
-    //     //     return
-    //     //   }
-    //       const cursor = state.pointer
-    //       const cursorX = (cursor.x ) * 2;
-    //       const cursorY = (cursor.y ) * 2;
+    if(hover) {
+      gsap.to(ref.current.material.uniforms.uFull, { value: 2010.5, ease: 'power1.in', duration: 0.2 })
+      // console.log('hover')
+      // gsap.to(ref.current.position, { z: 0.5, ease: 'power1.in', duration: 0.01 })
+      // ref.current.position.z = 0.5
       
-    //     //   circ.value.set(cursorX, cursorY, 0)
-    //     circleRef.current?.position.set(cursorX, cursorY, 0)
-        
-    // })
-
-    // use
+    }
+     else {
+      // gsap.to(ref.current.position, { z: 0, ease: 'power1.in', duration: 0.01 })
+      // ref.current.position.z = 0
+      gsap.to(ref.current.material.uniforms.uFull, { value: 1990.0, ease: 'power1.in', duration: 2 })
+      // console.log('not hover')
+    }
     
-    return(
-        <mesh ref={ref}>
-            {/* <circleGeometry args={[0.1, 50, 0, Math.PI * 2]} /> */}
-            <boxGeometry />
-            {/* <shaderMaterial
-                vertexShader={cursorVertexShader}
-                fragmentShader={cursorFragmentShader}
-                uniforms={{
-                    note: { value: musicNoteMap }
-                }}
-            /> */}
-            <meshBasicMaterial color={'red'} />
+    if(ref.current)
+      // gsap.to(".view", { left:  (-value * 30.0) + y, top: x, ease: "power2.in", duration: 0.1 })
+    gsap.to(ref.current.position, { y: (-value * 30.0) + y, x: x, ease: "power2.in", duration: 0.01 })
+    // gsap.to(textRef.current.position, { y: (-value * 30.0) + y, x: x, ease: "power2.in", duration: 0.01 })
+    gsap.to(textRef.current.rotation, { y: 0, x: 0, z: -(x + (-value * 30.0) + y) , ease: "power2.in", duration: 0.1 })
+      gsap.to(ref.current.rotation, { y: 0, x: 0, z:x + (-value * 30.0) + y , ease: "power2.in", duration: 0.1 })
+      gsap.to(ref.current.material.uniforms.uTime, { value: elapsedTime } )
+    // if(htmlRef.current)
+      // document.addEventListener('scroll', () => {
+      //   gsap.to(".text", { top:  value, ease: "power2.in", duration: 0.1 })
+      // })
+    
 
-        </mesh>
-        // <Html style={{
-        //     position: 'fixed',
-        //     left: position.x,
-        //     top: position.y,
-        // }}>
-            // <div className='cursor' style={{
-            //   position: 'absolute',
-            //   left: position.x + 2 + 'px',
-            //   top: position.y + 2 + 'px',
-            //   zIndex: 1,
-            //   backgroundColor: color
-            // }}>
-               
-            // </div>
-        // </Html>
+
+  })
+  
+    return(
+      <group  
+        // position={[0, 0, 0.8]} 
+      >
+
+         <primitive
+          ref={ref}
+          object={planeMesh}
+          scale={[1 / divide, 1 / divide, 1 / divide]}
+          
+        >
+          {/* <Html ref={htmlRef} className='view' 
+          style={{
+            // left: `${position.x}px`,
+            // top: `${position.y}px`
+          }}
+          >
+            <h1>View</h1>
+          </Html> */}
+          <mesh ref={textRef} rotation={[0, 0, 0]}>
+            <planeGeometry args={[1, 1, 16 / (divide + 1), 64 / (divide + 1)]}/>
+            <meshBasicMaterial color={color} />
+          </mesh>
+          {/* <Text 
+            position={[0, 0, 1]}
+          ref={textRef}
+          fontSize={0.055}
+          font={fontLibrary.montserrat.regular}
+          color={'red'}
+          >
+            View
+          </Text> */}
+        </primitive>
+
+          </group>
+        
     )
 }
 

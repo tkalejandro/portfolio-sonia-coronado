@@ -5,7 +5,7 @@ import { RoundedBox, Text } from '@react-three/drei';
 import { ThreeColor, ThreeSize } from '@/types/ExperienceTypes';
 import { useAppTheme } from '@/hooks';
 import { fontLibrary } from '@/helpers';
-import { useColor } from '../Cursor/CursorManager';
+import { useCursor } from '../Cursor/CursorManager';
 
 interface ThreeDButtonProps extends GroupProps {
   /**
@@ -45,7 +45,7 @@ const ThreeDButton = ({
   const [buttonColor, setButtonColor] = useState<string>();
   const [textColor, setTextColor] = useState<string>();
   
-  const { changeColor } = useColor()
+  const { changeColor, changeHover } = useCursor()
 
   useEffect(() => {
     colorToUse();
@@ -120,9 +120,9 @@ const ThreeDButton = ({
     <group
       {...props}
       scale={props.scale ?? [buttonScale, buttonScale, 1]}
-      onPointerEnter={changeColor('red')}
-      onPointerLeave={changeColor('rgba(255, 255, 255, 0.8)')}
-      
+      onPointerEnter={() => changeHover(true)}
+      onPointerLeave={() => changeHover(false)}
+      // onPointerDown={() => changeHover(true)}
       >
       {/* Button */}
 
