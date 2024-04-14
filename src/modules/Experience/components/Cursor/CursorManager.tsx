@@ -8,6 +8,7 @@ const CursorContext = createContext<any>(null);
 export const CursorManage = ({ children }: any) => {
   const [color, setColor] = useState('rgba(255, 255, 255, 0.8)');
   const [hover, setHover] = useState(false);
+  const [text, setText] = useState<boolean>(false);
 
   // Function to update color
   const changeColor = (newColor: React.SetStateAction<string>) => {
@@ -16,11 +17,15 @@ export const CursorManage = ({ children }: any) => {
 
   const changeHover = (newHover: boolean) => {
     setHover(newHover)
+  };
+
+  const changeText = (newText: boolean) => {
+    setText(newText)
   }
 
 
   return (
-    <CursorContext.Provider value={{ color, changeColor, hover, changeHover }}>
+    <CursorContext.Provider value={{ color, changeColor, hover, changeHover, text, changeText }}>
       {children}
     </CursorContext.Provider>
   );

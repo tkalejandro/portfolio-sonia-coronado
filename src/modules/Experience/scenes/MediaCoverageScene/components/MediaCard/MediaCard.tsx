@@ -8,6 +8,7 @@ import { Box, Flex } from '@react-three/flex';
 import { fontLibrary } from '@/helpers';
 import { useAppBreakpoints, useAppTheme } from '@/hooks';
 import { EnhancedGroup } from '@/modules/Experience/components';
+import { useCursor } from '@/modules/Experience/components/Cursor/CursorManager';
 
 interface MediaProps {
   title: string;
@@ -18,6 +19,7 @@ interface MediaProps {
 
 const MediaCard = ({ title, image, description, url }: MediaProps) => {
   const [hovered, setHover] = useState<boolean>(false);
+  const { changeColor, changeHover, changeText } = useCursor()
   const [fixedElapse, setFixedElpase] = useState<number>(0);
   const theme = useAppTheme();
   const { isDesktop } = useAppBreakpoints();
@@ -64,8 +66,24 @@ const MediaCard = ({ title, image, description, url }: MediaProps) => {
   const openNewTab = () => {
     window.open(url, '_blank');
   };
+
+  const hoverCard = async(param: boolean) => {
+    await setHover(param)
+    await changeText(param)
+    await changeHover(param)
+  }
+
+  const notHoverCard = async() => {
+    await changeHover(true)
+    await setHover(true)
+    await changeText(true)
+  }
+
   return (
-    <EnhancedGroup onClick={openNewTab}>
+    
+    <EnhancedGroup
+      onClick={openNewTab}
+    >
       <Box
         centerAnchor
         dir="column"
@@ -73,8 +91,10 @@ const MediaCard = ({ title, image, description, url }: MediaProps) => {
         scale={0.95}
         justify="flex-start"
         align="flex-start"
+        
       >
         <Box marginBottom={0.05} centerAnchor>
+          
           <Text
             position={[-0.859, 0, 0]}
             textAlign="left"
@@ -102,8 +122,8 @@ const MediaCard = ({ title, image, description, url }: MediaProps) => {
         <Box marginTop={0.75}>
           <mesh
             ref={ref}
-            onPointerEnter={(event) => setHover(true)}
-            onPointerOut={(event) => setHover(false)}
+            onPointerEnter={() => hoverCard(true)}
+            onPointerOut={() => hoverCard(false)}
           >
             <planeGeometry args={[1.8, 1.2, 1]} />
             {

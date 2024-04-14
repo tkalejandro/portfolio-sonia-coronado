@@ -68,10 +68,10 @@ const AudioLibraryScene = ({ position }: AudioLibrarySceneProps) => {
   const handlePointerLeave = () => {
     setIsDragging(false);
 
-    document.body.style.cursor = 'default';
+    document.body.style.cursor = 'none';
   };
   const handlePointerEnter = () => {
-    document.body.style.cursor = 'grab';
+    document.body.style.cursor = 'none';
   };
 
   const xRadius = isDesktop ? 1.75 : isBigTablet ? 1.5 : 1;

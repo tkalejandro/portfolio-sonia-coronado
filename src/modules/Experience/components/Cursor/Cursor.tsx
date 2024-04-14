@@ -10,12 +10,13 @@ import { fontLibrary, textureLibrary } from '@/helpers';
 import { NormalBufferAttributes } from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useCursor } from './CursorManager';
+import { theme } from '@/theme/theme';
 
 const Cursor = () => {
     // const circleRef = useRef<THREE.ShaderMaterial>(null)
     // const circleRef = useRef<THREE.Mesh>(null)
     const [position, setPosition] = useState({ x: 0, y: 0 });
-    const { color, hover } = useCursor()
+    const { color, hover, text } = useCursor()
     console.log(hover)
     const { viewport } = useThree()
   // viewport = canvas in 3d units (meters)
@@ -83,7 +84,7 @@ const Cursor = () => {
      else {
       // gsap.to(ref.current.position, { z: 0, ease: 'power1.in', duration: 0.01 })
       // ref.current.position.z = 0
-      gsap.to(ref.current.material.uniforms.uFull, { value: 1990.0, ease: 'power1.in', duration: 2 })
+      gsap.to(ref.current.material.uniforms.uFull, { value: 1990.0, ease: 'power1.out', duration: 0.2 })
       // console.log('not hover')
     }
     
@@ -122,19 +123,20 @@ const Cursor = () => {
           >
             <h1>View</h1>
           </Html> */}
-          <mesh ref={textRef} rotation={[0, 0, 0]}>
+          {/* <mesh ref={textRef} rotation={[0, 0, 0]}>
             <planeGeometry args={[1, 1, 16 / (divide + 1), 64 / (divide + 1)]}/>
             <meshBasicMaterial color={color} />
-          </mesh>
-          {/* <Text 
-            position={[0, 0, 1]}
+          </mesh> */}
+          <Text 
+            position={[0, 0, 0]}
           ref={textRef}
-          fontSize={0.055}
+          fontSize={0.355}
           font={fontLibrary.montserrat.regular}
-          color={'red'}
+          color={theme.colors.primary.main}
+          // material={new THREE.ShaderMaterial}
           >
-            View
-          </Text> */}
+            {text ? "View" : ""}
+          </Text>
         </primitive>
 
           </group>
