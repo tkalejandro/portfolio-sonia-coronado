@@ -8,7 +8,14 @@ const CursorContext = createContext<any>(null);
 export const CursorManage = ({ children }: any) => {
   const [color, setColor] = useState('rgba(255, 255, 255, 0.8)');
   const [hover, setHover] = useState(false);
-  const [text, setText] = useState<boolean>(false);
+  const [text, setText] = useState<string>("");
+  const [settings, setSettings] = useState<object>({
+    color: 'rgba(255, 255, 255, 0.8)',
+    hover: false,
+    text: "",
+    contact: false,
+    secret: false
+  })
 
   // Function to update color
   const changeColor = (newColor: React.SetStateAction<string>) => {
@@ -16,16 +23,28 @@ export const CursorManage = ({ children }: any) => {
   };
 
   const changeHover = (newHover: boolean) => {
+    
     setHover(newHover)
   };
 
-  const changeText = (newText: boolean) => {
+  const changeText = (newText: string) => {
     setText(newText)
+  }
+
+  const changeSettings = (newColor: string, newHover: boolean, newText: string, newContact: boolean, newSecret: boolean) => {
+    // document.body.style.cursor = 'none';
+    setSettings({
+      color: newColor,
+      hover: newHover,
+      text: newText,
+      contact: newContact,
+      secret: newSecret
+    })
   }
 
 
   return (
-    <CursorContext.Provider value={{ color, changeColor, hover, changeHover, text, changeText }}>
+    <CursorContext.Provider value={{ color, changeColor, hover, changeHover, text, changeText, settings, changeSettings }}>
       {children}
     </CursorContext.Provider>
   );

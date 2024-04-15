@@ -19,7 +19,7 @@ interface MediaProps {
 
 const MediaCard = ({ title, image, description, url }: MediaProps) => {
   const [hovered, setHover] = useState<boolean>(false);
-  const { changeColor, changeHover, changeText } = useCursor()
+  const { changeColor, changeHover, changeText, settings, changeSettings } = useCursor()
   const [fixedElapse, setFixedElpase] = useState<number>(0);
   const theme = useAppTheme();
   const { isDesktop } = useAppBreakpoints();
@@ -67,16 +67,19 @@ const MediaCard = ({ title, image, description, url }: MediaProps) => {
     window.open(url, '_blank');
   };
 
-  const hoverCard = async(param: boolean) => {
-    await setHover(param)
-    await changeText(param)
-    await changeHover(param)
+  const hoverCard = async() => {
+    await setHover(true)
+    // await changeText("View")
+    // await changeHover(param)
+    await changeSettings("red", true, "View", false)
+    document.body.style.cursor = "none"
+    
   }
 
   const notHoverCard = async() => {
-    await changeHover(true)
-    await setHover(true)
-    await changeText(true)
+    await setHover(false)
+    await changeSettings("red", false, "", false)
+    document.body.style.cursor = "default"
   }
 
   return (
@@ -122,8 +125,8 @@ const MediaCard = ({ title, image, description, url }: MediaProps) => {
         <Box marginTop={0.75}>
           <mesh
             ref={ref}
-            onPointerEnter={() => hoverCard(true)}
-            onPointerOut={() => hoverCard(false)}
+            onPointerEnter={() => hoverCard()}
+            onPointerOut={() => notHoverCard()}
           >
             <planeGeometry args={[1.8, 1.2, 1]} />
             {

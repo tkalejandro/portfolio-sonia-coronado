@@ -31,6 +31,12 @@ class TextureLibrary {
       map: '/textures/wind/wind.png'
     }
   }
+
+  face() {
+    return {
+      map: '/textures/insideCursor/face.png'
+    }
+  }
 }
 
 const textureLibrary = new TextureLibrary();

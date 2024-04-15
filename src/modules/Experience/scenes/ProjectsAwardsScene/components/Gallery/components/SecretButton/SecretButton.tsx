@@ -2,10 +2,11 @@ import { Phase } from '@/enums/Experience';
 import { threeHelpers } from '@/helpers';
 import { useAppTheme } from '@/hooks';
 import { ChakraHtml } from '@/modules/Experience/components';
+import { useCursor } from '@/modules/Experience/components/Cursor/CursorManager';
 import { useSoundManagerContext } from '@/modules/Experience/sounds/SoundManager/SoundManager';
 import { useAppSettings } from '@/store';
 import { ElementTransform } from '@/types/ExperienceTypes';
-import { Button } from '@chakra-ui/button';
+import { Button, ButtonGroup } from '@chakra-ui/button';
 import { useDisclosure } from '@chakra-ui/hooks';
 import { Text } from '@chakra-ui/layout';
 import {
@@ -35,14 +36,22 @@ const ScretButton = ({ element }: SecretButtonProps) => {
   const secretRef = useRef<Mesh>(null!);
   const { camera } = useThree();
   const theme = useAppTheme();
-  const openSecret = (): void => {
-    onOpen();
-    setIsSecretReveal(true);
+  const { changeSettings } = useCursor()
+  // changeSettings("", false, "", false, true)
+  // document.body.style.cursor = "default"
+  const openSecret = async() => {
+    await onOpen();
+    await setIsSecretReveal(true);
+    // document.body.style.cursor = "default"
+    // await changeSettings().contact
   };
 
-  const closeSecret = (): void => {
-    onSecretFound();
-    onClose();
+  const closeSecret = async() => {
+    await onSecretFound();
+    await onClose();
+    await changeSettings("", false, "", false, false)
+    // document.body.style.cursor = "none"
+    
   };
 
   useFrame(() => {
@@ -73,20 +82,25 @@ const ScretButton = ({ element }: SecretButtonProps) => {
         ref={secretRef}
         position={element.position}
         onPointerEnter={() => {
-          document.body.style.cursor = 'pointer';
+          changeSettings("", true, "Click", false, true)
         }}
         onPointerLeave={() => {
-          document.body.style.cursor = 'default';
+          changeSettings("", false, "", false, false)
         }}
         onClick={openSecret}
       >
         <planeGeometry args={element.scale} />
         <meshStandardMaterial color="purple" />
       </mesh>
-      <ChakraHtml>
+      <ChakraHtml >
+        <ButtonGroup>
         <Modal isCentered isOpen={isOpen} onClose={closeSecret} size="xl">
-          <ModalOverlay />
-          <ModalContent margin={4}>
+          <ModalOverlay  />
+          <mesh>
+          <planeGeometry args={element.scale} />
+          <meshStandardMaterial color="purple" />
+          </mesh>
+          <ModalContent margin={4} >
             <ModalHeader fontSize="medium" color={theme.colors.primary.main}>
               {'You found me!'}
             </ModalHeader>
@@ -124,6 +138,7 @@ const ScretButton = ({ element }: SecretButtonProps) => {
             </ModalFooter>
           </ModalContent>
         </Modal>
+        </ButtonGroup>
       </ChakraHtml>
     </>
   );

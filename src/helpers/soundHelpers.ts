@@ -46,7 +46,7 @@ class SoundHelpers {
 
       // Calculate the new volume for this frame
       const newVolume = currentVolume + volumeChangePerFrame * currentFrame;
-
+      
       // Update the volume (replace this with your actual volume update logic)
       audioElement.current.volume = newVolume;
       //console.log(`Updating volume to: ${newVolume.toFixed(2)}`);

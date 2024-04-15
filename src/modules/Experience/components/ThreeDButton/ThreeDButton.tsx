@@ -45,7 +45,7 @@ const ThreeDButton = ({
   const [buttonColor, setButtonColor] = useState<string>();
   const [textColor, setTextColor] = useState<string>();
   
-  const { changeColor, changeHover } = useCursor()
+  const { changeColor, changeHover, changeSettings } = useCursor()
 
   useEffect(() => {
     colorToUse();
@@ -120,8 +120,8 @@ const ThreeDButton = ({
     <group
       {...props}
       scale={props.scale ?? [buttonScale, buttonScale, 1]}
-      onPointerEnter={() => changeHover(true)}
-      onPointerLeave={() => changeHover(false)}
+      onPointerEnter={() => changeSettings("", true, "")}
+      onPointerLeave={() => changeSettings("", false, "")}
       // onPointerDown={() => changeHover(true)}
       >
       {/* Button */}

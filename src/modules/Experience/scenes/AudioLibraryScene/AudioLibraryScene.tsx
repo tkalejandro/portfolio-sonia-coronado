@@ -68,10 +68,10 @@ const AudioLibraryScene = ({ position }: AudioLibrarySceneProps) => {
   const handlePointerLeave = () => {
     setIsDragging(false);
 
-    document.body.style.cursor = 'none';
+    // document.body.style.cursor = 'default';
   };
   const handlePointerEnter = () => {
-    document.body.style.cursor = 'none';
+    document.body.style.cursor = 'grab';
   };
 
   const xRadius = isDesktop ? 1.75 : isBigTablet ? 1.5 : 1;
@@ -130,7 +130,7 @@ const AudioLibraryScene = ({ position }: AudioLibrarySceneProps) => {
         onPointerDown={handlePointerDown}
         onPointerUp={dragFalse}
         onPointerLeave={handlePointerLeave}
-        onPointerEnter={handlePointerEnter}
+        // onPointerEnter={handlePointerEnter}
         invisibleSize={[screenWidth, 1.3, 0]}
         invisiblePosition={[0, 0, 0.85]}
       >
