@@ -19,7 +19,7 @@ interface MediaProps {
 
 const MediaCard = ({ title, image, description, url }: MediaProps) => {
   const [hovered, setHover] = useState<boolean>(false);
-  const { changeColor, changeHover, changeText, settings, changeSettings } = useCursor()
+  const { changeSettings } = useCursor()
   const [fixedElapse, setFixedElpase] = useState<number>(0);
   const theme = useAppTheme();
   const { isDesktop } = useAppBreakpoints();
@@ -68,17 +68,15 @@ const MediaCard = ({ title, image, description, url }: MediaProps) => {
   };
 
   const hoverCard = async() => {
-    await setHover(true)
-    // await changeText("View")
-    // await changeHover(param)
-    await changeSettings("red", true, "View", false)
+    setHover(true)
+    changeSettings("red", true, "View", false)
     document.body.style.cursor = "none"
     
   }
 
   const notHoverCard = async() => {
-    await setHover(false)
-    await changeSettings("red", false, "", false)
+    setHover(false)
+    changeSettings("red", false, "", false)
     document.body.style.cursor = "default"
   }
 

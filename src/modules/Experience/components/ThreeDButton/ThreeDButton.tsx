@@ -45,7 +45,7 @@ const ThreeDButton = ({
   const [buttonColor, setButtonColor] = useState<string>();
   const [textColor, setTextColor] = useState<string>();
   
-  const { changeColor, changeHover, changeSettings } = useCursor()
+  const { changeSettings } = useCursor()
 
   useEffect(() => {
     colorToUse();

@@ -8,9 +8,6 @@ import { useAppBreakpoints, useAppTheme } from '@/hooks';
 import { Forest, Land, Trees, Wall } from './components';
 import { useRouter } from 'next/navigation';
 import { EnhancedGroup, InvisibleMesh } from '../../components';
-import { useCursor } from '../../components/Cursor/CursorManager';
-import { Color } from 'three';
-// import { useTheme } from '@chakra-ui/react';
 
 interface ContactSceneProps {
   position: Vector3;
@@ -24,7 +21,6 @@ const ContactScene = ({ position }: ContactSceneProps) => {
   const router = useRouter();
   const theme = useAppTheme();
   const { isTablet, isBigTablet } = useAppBreakpoints();
-  const { changeSettings, color, changeColor } = useCursor()
   
   const linkdinRef = useRef()
   const emailRef = useRef()

@@ -6,7 +6,7 @@ import React, { useMemo, useRef } from 'react';
 import { Group } from 'three';
 
 const Wall = () => {
-    const { changeSettings, color, changeColor } = useCursor()
+    const { changeSettings } = useCursor()
 
   return (
     <mesh 

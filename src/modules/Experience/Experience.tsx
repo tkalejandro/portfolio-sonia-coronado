@@ -29,7 +29,7 @@ const Experience = () => {
   const experienceLoaded = useAppSettings((state) => state.experienceLoaded);
   const [distance, setDistance] = useState<number>(0);
   const [dpr, setDpr] = useState(1.5);
-  const { isBigTablet } = useAppBreakpoints();
+  const { isBigTablet, isDesktop } = useAppBreakpoints();
   // const {
   //   //welcomePosition,
   //   //addMusicPosition,
@@ -78,7 +78,7 @@ const Experience = () => {
                     eps={0.00001}
                     enabled={experienceLoaded}
                   >
-                    <Cursor />
+                    {isDesktop && <Cursor />}
                     <MainCamera />
                     <MainLight />
                     {debugMode && <Perf position="top-left" />}
