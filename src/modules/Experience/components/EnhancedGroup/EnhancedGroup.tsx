@@ -15,11 +15,11 @@ const EnhancedGroup = ({ children, ...props }: EnhancedGroupProps) => {
   return (
     <group
       onPointerEnter={() => {
-        // document.body.style.cursor = 'pointer !important';
+        document.body.style.cursor = 'pointer';
         
       }}
       onPointerLeave={() => {
-        // document.body.style.cursor = 'default !important';
+        document.body.style.cursor = 'default';
       }}
       {...props}
     >

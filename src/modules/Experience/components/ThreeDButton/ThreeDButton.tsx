@@ -120,8 +120,8 @@ const ThreeDButton = ({
     <group
       {...props}
       scale={props.scale ?? [buttonScale, buttonScale, 1]}
-      onPointerEnter={() => changeSettings("", true, "")}
-      onPointerLeave={() => changeSettings("", false, "")}
+      onPointerEnter={() => changeSettings("", true, "", false, false)}
+      onPointerLeave={() => changeSettings("", false, "", false, false)}
       >
       {/* Button */}
 

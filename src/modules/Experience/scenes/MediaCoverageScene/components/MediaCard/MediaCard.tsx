@@ -73,10 +73,13 @@ const MediaCard = ({ title, image, description, url }: MediaProps) => {
       "red",
       param,
       param ? "View" : "",
+      false,
       false
     )
-    document.body.style.cursor = param ? "none" : "default"
-    
+  }
+
+  const none = () => {
+    document.body.style.cursor = "none"
   }
 
   // const notHoverCard = async() => {
@@ -89,6 +92,7 @@ const MediaCard = ({ title, image, description, url }: MediaProps) => {
     
     <EnhancedGroup
       onClick={openNewTab}
+      onPointerEnter={() => none()}
     >
       <Box
         centerAnchor

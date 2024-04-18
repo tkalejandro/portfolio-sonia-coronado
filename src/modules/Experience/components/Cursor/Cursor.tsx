@@ -1,4 +1,3 @@
-// import '@/theme/globals.css';
 import { useScroll, Text } from '@react-three/drei';
 import * as THREE from 'three'
 import gsap from 'gsap';
@@ -74,8 +73,6 @@ const Cursor = () => {
 
 
   })
-
-  const divide = 3
   
     return(
       <group>
@@ -83,12 +80,12 @@ const Cursor = () => {
         <primitive
           ref={ref}
           object={torusMesh}
-          scale={[1 / divide, 1 / divide, 1 / divide]}
+          scale={[1 / 3, 1 / 3, 1 / 3]}
           position={[-3, -28.5, 0]}
         >
           
           {settings.contact ? <mesh ref={insideRef} >
-            <planeGeometry args={[1, 1, 16 / (divide + 1), 64 / (divide + 1)]}/>
+            <planeGeometry args={[1, 1, 16 / (3 + 1), 64 / (3 + 1)]}/>
             <shaderMaterial
               vertexShader={insideCursorVertexShader}
               fragmentShader={insideCursorFragmentShader}

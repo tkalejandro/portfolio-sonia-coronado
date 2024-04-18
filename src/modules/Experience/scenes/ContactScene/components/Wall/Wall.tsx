@@ -11,8 +11,8 @@ const Wall = () => {
   return (
     <mesh 
         position={[0, -6, -2]}
-        onPointerEnter={() => changeSettings("", false, "", true)}
-        onPointerLeave={() => changeSettings("", false, "", false)}
+        onPointerEnter={() => changeSettings("", false, "", true, false)}
+        onPointerLeave={() => changeSettings("", false, "", false, false)}
       >
         <planeGeometry args={[20, 20]} />
         <meshBasicMaterial transparent={true} depthWrite={false} opacity={0}/>

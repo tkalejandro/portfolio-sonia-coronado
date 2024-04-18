@@ -77,9 +77,12 @@ const ScretButton = ({ element }: SecretButtonProps) => {
         position={element.position}
         onPointerEnter={() => {
           changeSettings("", true, "Click", false, true)
+          document.body.style.cursor = "none"
+
         }}
         onPointerLeave={() => {
           changeSettings("", false, "", false, false)
+          document.body.style.cursor = "default"
         }}
         onClick={openSecret}
       >

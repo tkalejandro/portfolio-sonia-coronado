@@ -1,15 +1,19 @@
 // CursorContext.js
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, ReactNode, Children, Context } from 'react';
+import { CursorManager } from '@/types/ExperienceTypes';
 
 // Create a context
-const CursorContext = createContext<any>(null);
+const CursorContext = createContext<CursorManager | undefined>(undefined);
+
+interface CursorManagerProps {
+  children: ReactNode;
+}
+
 
 // Create a provider component
-export const CursorManage = ({ children }: any) => {
+export const CursorManage = ({ children }:CursorManagerProps) => {
   const [color, setColor] = useState('rgba(255, 255, 255, 0.8)');
-  const [hover, setHover] = useState(false);
-  const [text, setText] = useState<string>("");
-  const [settings, setSettings] = useState<object>({
+  const [settings, setSettings] = useState({
     color: 'rgba(255, 255, 255, 0.8)',
     hover: false,
     text: "",
@@ -18,21 +22,11 @@ export const CursorManage = ({ children }: any) => {
   })
 
   // Function to update color
-  const changeColor = (newColor: React.SetStateAction<string>) => {
+  const changeColor = (newColor: React.SetStateAction<string>):void => {
     setColor(newColor);
   };
 
-  const changeHover = (newHover: boolean) => {
-    
-    setHover(newHover)
-  };
-
-  const changeText = (newText: string) => {
-    setText(newText)
-  }
-
-  const changeSettings = (newColor: string, newHover: boolean, newText: string, newContact: boolean, newSecret: boolean) => {
-    // document.body.style.cursor = 'none';
+  const changeSettings = (newColor: string, newHover: boolean, newText: string, newContact: boolean, newSecret: boolean):void => {
     setSettings({
       color: newColor,
       hover: newHover,
@@ -44,11 +38,16 @@ export const CursorManage = ({ children }: any) => {
 
 
   return (
-    <CursorContext.Provider value={{ color, changeColor, hover, changeHover, text, changeText, settings, changeSettings }}>
+    <CursorContext.Provider value={{ color, changeColor, settings, changeSettings }}>
       {children}
     </CursorContext.Provider>
   );
 };
 
-// Custom hook to use the color context
-export const useCursor = () => useContext(CursorContext);
+export const useCursor = () => {
+  const context = useContext(CursorContext);
+  if (!context) {
+    throw new Error('useSoundManagerContext must be used within a SoundManagerContextProvider');
+  }
+  return context;
+};
