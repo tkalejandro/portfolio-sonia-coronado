@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Vector3 } from '@react-three/fiber';
+import { Props, Vector3 } from '@react-three/fiber';
 import { Text } from '@react-three/drei';
 import { soniaCoronado } from '@/constants';
 import { fontLibrary } from '@/helpers';
@@ -8,6 +8,7 @@ import { useAppBreakpoints, useAppTheme } from '@/hooks';
 import { Forest, Land, Trees, Wall } from './components';
 import { useRouter } from 'next/navigation';
 import { EnhancedGroup, InvisibleMesh } from '../../components';
+import { Material, Mesh } from 'three';
 
 interface ContactSceneProps {
   position: Vector3;
@@ -22,10 +23,10 @@ const ContactScene = ({ position }: ContactSceneProps) => {
   const theme = useAppTheme();
   const { isTablet, isBigTablet } = useAppBreakpoints();
   
-  const linkdinRef = useRef()
-  const emailRef = useRef()
-  const numRef = useRef()
-  const resumeRef = useRef()
+  const linkdinRef = useRef<Props>()
+  const emailRef = useRef<Props>()
+  const numRef = useRef<Props>()
+  const resumeRef = useRef<Props>()
 
   const openLinkedIn = () => {
     window.open(linkedin, '_blank');
@@ -74,12 +75,10 @@ const ContactScene = ({ position }: ContactSceneProps) => {
             position={[-0.14, 1.69, 0.025]}
             onPointerEnter={() => {
               if(linkdinRef.current)
-                // @ts-ignore
                 linkdinRef.current.color = theme.colors.primary.main
             }}
             onPointerLeave={() => {
               if(linkdinRef.current)
-                // @ts-ignore
                 linkdinRef.current.color = "white"
             }}
           >
@@ -100,12 +99,10 @@ const ContactScene = ({ position }: ContactSceneProps) => {
               position={[0.05, 1.24, 0.025]}
               onPointerEnter={() => {
                 if(emailRef.current)
-                  // @ts-ignore
                   emailRef.current.color = theme.colors.primary.main
               }}
               onPointerLeave={() => {
                 if(emailRef.current)
-                  // @ts-ignore
                   emailRef.current.color = "white"
               }}
             >
@@ -120,12 +117,10 @@ const ContactScene = ({ position }: ContactSceneProps) => {
               position={[0.05, 1.12, 0.025]}
               onPointerEnter={() => {
                 if(numRef.current)
-                  // @ts-ignore
                   numRef.current.color = theme.colors.primary.main
               }}
               onPointerLeave={() => {
                 if(numRef.current)
-                  // @ts-ignore
                   numRef.current.color = "white"
               }}
             >
@@ -141,12 +136,10 @@ const ContactScene = ({ position }: ContactSceneProps) => {
             position={[0.03, 0.76, 0.025]}
             onPointerEnter={() => {
               if(resumeRef.current)
-                // @ts-ignore
                 resumeRef.current.color = theme.colors.primary.main
             }}
             onPointerLeave={() => {
               if(resumeRef.current)
-                // @ts-ignore
                 resumeRef.current.color = "white"
             }}
           >

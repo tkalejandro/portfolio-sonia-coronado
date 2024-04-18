@@ -37,21 +37,15 @@ const ScretButton = ({ element }: SecretButtonProps) => {
   const { camera } = useThree();
   const theme = useAppTheme();
   const { changeSettings } = useCursor()
-  // changeSettings("", false, "", false, true)
-  // document.body.style.cursor = "default"
   const openSecret = async() => {
     await onOpen();
     await setIsSecretReveal(true);
-    // document.body.style.cursor = "default"
-    // await changeSettings().contact
   };
 
   const closeSecret = async() => {
     await onSecretFound();
     await onClose();
     await changeSettings("", false, "", false, false)
-    // document.body.style.cursor = "none"
-    
   };
 
   useFrame(() => {

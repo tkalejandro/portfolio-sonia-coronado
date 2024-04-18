@@ -13,13 +13,12 @@ import ProjectsAwardsScene from './scenes/ProjectsAwardsScene/ProjectsAwardsScen
 import { Perf } from 'r3f-perf';
 import { useAppSettings, useDeveloperSettings } from '@/store';
 import { useControls } from 'leva';
-import { DebugButton, Cursor } from './components';
+import { DebugButton, Cursor, CursorManage } from './components';
 import { MainCamera } from './camera';
 import { MainLight } from './lights';
 import { SoundManager } from './sounds';
 import { Loader } from './loader';
 import { useAppBreakpoints } from '@/hooks';
-import { CursorManage } from './components/Cursor/CursorManager';
 
 /**
  * Heart of the 3D App

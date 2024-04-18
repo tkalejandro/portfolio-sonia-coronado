@@ -122,7 +122,6 @@ const ThreeDButton = ({
       scale={props.scale ?? [buttonScale, buttonScale, 1]}
       onPointerEnter={() => changeSettings("", true, "")}
       onPointerLeave={() => changeSettings("", false, "")}
-      // onPointerDown={() => changeHover(true)}
       >
       {/* Button */}
 

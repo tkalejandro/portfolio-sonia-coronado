@@ -67,18 +67,23 @@ const MediaCard = ({ title, image, description, url }: MediaProps) => {
     window.open(url, '_blank');
   };
 
-  const hoverCard = async() => {
-    setHover(true)
-    changeSettings("red", true, "View", false)
-    document.body.style.cursor = "none"
+  const hoverCard = (param: boolean) => {
+    setHover(param)
+    changeSettings(
+      "red",
+      param,
+      param ? "View" : "",
+      false
+    )
+    document.body.style.cursor = param ? "none" : "default"
     
   }
 
-  const notHoverCard = async() => {
-    setHover(false)
-    changeSettings("red", false, "", false)
-    document.body.style.cursor = "default"
-  }
+  // const notHoverCard = async() => {
+  //   setHover(false)
+  //   changeSettings("red", false, "", false)
+  //   document.body.style.cursor = "default"
+  // }
 
   return (
     
@@ -123,8 +128,8 @@ const MediaCard = ({ title, image, description, url }: MediaProps) => {
         <Box marginTop={0.75}>
           <mesh
             ref={ref}
-            onPointerEnter={() => hoverCard()}
-            onPointerOut={() => notHoverCard()}
+            onPointerEnter={() => hoverCard(true)}
+            onPointerOut={() => hoverCard(false)}
           >
             <planeGeometry args={[1.8, 1.2, 1]} />
             {

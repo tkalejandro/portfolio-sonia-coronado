@@ -1,6 +1,5 @@
 // import '@/theme/globals.css';
 import { useScroll, Text } from '@react-three/drei';
-import './cursor.css'
 import * as THREE from 'three'
 import gsap from 'gsap';
 import { useRef } from 'react';
@@ -76,7 +75,7 @@ const Cursor = () => {
 
   })
 
-  let divide = 3
+  const divide = 3
   
     return(
       <group>
