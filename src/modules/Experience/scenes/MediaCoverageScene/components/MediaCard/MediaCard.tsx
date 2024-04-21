@@ -53,9 +53,9 @@ const MediaCard = ({ title, image, description, url }: MediaProps) => {
   });
 
   /**
-   * We will save the last elapsed time durring
+   * We will save the last elapsed time during
    * the animation and save it so the image stay
-   * fixed when mouving the mouse out of mesh
+   * fixed when moving the mouse out of mesh
    * instead of returning to it's initial shape
    */
 
@@ -81,12 +81,6 @@ const MediaCard = ({ title, image, description, url }: MediaProps) => {
   const none = () => {
     document.body.style.cursor = "none"
   }
-
-  // const notHoverCard = async() => {
-  //   setHover(false)
-  //   changeSettings("red", false, "", false)
-  //   document.body.style.cursor = "default"
-  // }
 
   return (
     

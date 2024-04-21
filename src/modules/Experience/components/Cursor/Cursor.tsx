@@ -1,21 +1,33 @@
 import { useScroll, Text } from '@react-three/drei';
 import * as THREE from 'three'
 import gsap from 'gsap';
-import { useRef } from 'react';
+import { MutableRefObject, useRef } from 'react';
 import { cursorFragmentShader, cursorVertexShader } from '../../shaders/cursorShader';
 import { fontLibrary, textureLibrary } from '@/helpers';
-import { useFrame, useThree } from '@react-three/fiber';
+import { PrimitiveProps, Props, useFrame, useThree } from '@react-three/fiber';
 import { useCursor } from './CursorManager';
 import { theme } from '@/theme/theme';
 import { insideCursorFragmentShader, insideCursorVertexShader } from '../../shaders/cursorShader/insideCursorShader';
 
+interface CursorMaterial extends THREE.Material {
+  uniforms: {
+    uTime: THREE.Uniform<number>;
+    uPerlinTexture: THREE.Texture;
+    uFull: THREE.Uniform<number>
+  }
+}
+
+interface CursorMesh extends THREE.Mesh {
+  material: CursorMaterial
+}
+
 const Cursor = () => {
-  const { settings } = useCursor()
-  const { viewport } = useThree()
+  const { settings } = useCursor();
+  const { viewport } = useThree();
   const scroll = useScroll();
 
-  const ref = useRef<THREE.Mesh | any>()
-  const insideRef = useRef<THREE.Mesh | any>()
+  const cursorRef = useRef<CursorMesh>(null);
+  const faceRef = useRef<THREE.Mesh >(null);
 
   const windMap = new THREE.TextureLoader().load(textureLibrary.wind().map);
   windMap.wrapS = THREE.RepeatWrapping
@@ -50,41 +62,38 @@ const Cursor = () => {
       value = 0;
     }
 
-    if(settings.hover) {
-      gsap.to(ref.current.material.uniforms.uFull, { value: 2010.5, ease: 'power1.in', duration: 0.2 })
-    }
-     else {
-      gsap.to(ref.current.material.uniforms.uFull, { value: 1990.0, ease: 'power1.out', duration: 0.2 })
-    }
-    
-    if(ref.current)
-      gsap.to(ref.current.material.uniforms.uTime, { value: elapsedTime } )
+    if(cursorRef && cursorRef.current && faceRef && faceRef.current) {
+      if(settings.hover) 
+          gsap.to(cursorRef.current.material.uniforms.uFull, { value: 2010.5, ease: 'power1.in', duration: 0.2 })
+      else
+        gsap.to(cursorRef.current.material.uniforms.uFull, { value: 1990.0, ease: 'power1.out', duration: 0.2 })   
+      
+      gsap.to(cursorRef.current.material.uniforms.uTime, { value: elapsedTime } )
 
       if(settings.contact) {
-        gsap.to(ref.current.rotation, { y: 0, x: 0, z: 0 , ease: "power2.in", duration: 0.1 })
-        gsap.to(insideRef.current.rotation, { y: 0, x: 0, z: 0 , ease: "power2.in", duration: 0.1 })
+        gsap.to(cursorRef.current.rotation, { y: 0, x: 0, z: 0 , ease: "power2.in", duration: 0.1 })
+        gsap.to(faceRef.current.rotation, { y: 0, x: 0, z: 0 , ease: "power2.in", duration: 0.1 })
 
       } else {
-        gsap.to(ref.current.position, { y: (-value * 30.0) + y, x: x, z: 0, ease: "power2.in", duration: 0.01 })
-        gsap.to(ref.current.rotation, { y: 0, x: 0, z:x + (-value * 30.0) + y , ease: "power2.in", duration: 0.1 })
-        gsap.to(insideRef.current.rotation, { y: 0, x: 0, z: -(x + (-value * 30.0) + y) , ease: "power2.in", duration: 0.1 })
+        gsap.to(cursorRef.current.position, { y: (-value * 30.0) + y, x: x, z: 0, ease: "power2.in", duration: 0.01 })
+        gsap.to(cursorRef.current.rotation, { y: 0, x: 0, z:x + (-value * 30.0) + y , ease: "power2.in", duration: 0.1 })
+        gsap.to(faceRef.current.rotation, { y: 0, x: 0, z: -(x + (-value * 30.0) + y) , ease: "power2.in", duration: 0.1 })
       }
-    
-
-
+    }
+  
   })
   
     return(
       <group>
           
         <primitive
-          ref={ref}
+          ref={cursorRef}
           object={torusMesh}
           scale={[1 / 3, 1 / 3, 1 / 3]}
           position={[-3, -28.5, 0]}
         >
           
-          {settings.contact ? <mesh ref={insideRef} >
+          {settings.contact ? <mesh ref={faceRef} >
             <planeGeometry args={[1, 1, 16 / (3 + 1), 64 / (3 + 1)]}/>
             <shaderMaterial
               vertexShader={insideCursorVertexShader}
@@ -97,7 +106,7 @@ const Cursor = () => {
           </mesh>
           : <Text 
               position={[0, 0, 0]}
-              ref={insideRef}
+              ref={faceRef}
               fontSize={0.355}
               font={fontLibrary.montserrat.regular}
               color={theme.colors.primary.main}
