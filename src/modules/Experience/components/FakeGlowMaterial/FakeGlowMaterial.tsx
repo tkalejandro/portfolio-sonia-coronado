@@ -1,10 +1,10 @@
-import React, { useMemo } from "react";
-import { shaderMaterial } from "@react-three/drei";
-import type { Object3DNode } from "@react-three/fiber";
-import { extend } from "@react-three/fiber";
-import type { Material, Side } from "three";
-import { AdditiveBlending, Color, FrontSide } from "three";
-import type { ColorRepresentation } from "three";
+import React, { useMemo, forwardRef } from 'react';
+import { shaderMaterial } from '@react-three/drei';
+import type { Object3DNode } from '@react-three/fiber';
+import { extend } from '@react-three/fiber';
+import type { Material, Side } from 'three';
+import { AdditiveBlending, Color, FrontSide } from 'three';
+import type { ColorRepresentation } from 'three';
 
 /**
  * @typedef {Object} FakeGlowMaterialProps
@@ -18,10 +18,12 @@ import type { ColorRepresentation } from "three";
 /**
  * FakeGlow material component by Anderson Mancini - Feb 2024.
  * TypeScript version by https://github.com/nirtamir2. Thank you!
+ *
+ * Custom changes by: tkalejandro https://github.com/tkalejandro
  * @param {FakeGlowMaterialProps} props - Props for the FakeGlowMaterial component.
  */
 
-declare module "@react-three/fiber" {
+declare module '@react-three/fiber' {
   interface ThreeElements {
     fakeGlowMaterial: Object3DNode<Material, typeof FakeGlowMaterial>;
   }
@@ -34,24 +36,36 @@ type Props = {
   glowSharpness?: number;
   side?: Side;
 };
+export interface IFakeGlowMaterial extends Material {
+  uniforms: {
+    falloffAmount: { value: number };
+    glowColor: { value: Color };
+    glowInternalRadius: { value: number };
+    glowSharpness: { value: number };
+  };
+}
 
-const FakeGlowMaterial = ({
-  falloff = 0.1,
-  glowInternalRadius = 6,
-  glowColor = "#00ff00",
-  glowSharpness = 1,
-  side = FrontSide, // Adjust the PropTypes as per your requirements
-}: Props) => {
-  const FakeGlowMaterial = useMemo(() => {
-    return shaderMaterial(
-      {
-        falloffAmount: falloff,
-        glowInternalRadius,
-        glowColor: new Color(glowColor),
-        glowSharpness,
-      },
-      /*GLSL */
-      `
+const FakeGlowMaterial = forwardRef<IFakeGlowMaterial, Props>(
+  (
+    {
+      falloff = 0.1,
+      glowInternalRadius = 6,
+      glowColor = '#00ff00',
+      glowSharpness = 1,
+      side = FrontSide,
+    }: Props,
+    ref,
+  ) => {
+    const FakeGlowMaterial = useMemo(() => {
+      return shaderMaterial(
+        {
+          falloffAmount: falloff,
+          glowInternalRadius,
+          glowColor: new Color(glowColor),
+          glowSharpness,
+        },
+        /*GLSL */
+        `
       varying vec3 vPosition;
       varying vec3 vNormal;
       void main() {
@@ -61,8 +75,8 @@ const FakeGlowMaterial = ({
         vPosition = modelPosition.xyz;
         vNormal = modelNormal.xyz;
       }`,
-      /*GLSL */
-      ` 
+        /*GLSL */
+        ` 
       uniform vec3 glowColor;
       uniform float falloffAmount;
       uniform float glowSharpness;
@@ -84,20 +98,22 @@ const FakeGlowMaterial = ({
         fakeGlow *= falloff;
         gl_FragColor = vec4(clamp(glowColor * fresnel, 0., 1.0), clamp(fakeGlow, 0., 1.0));
       }`,
+      );
+    }, [falloff, glowInternalRadius, glowColor, glowSharpness, ref]);
+
+    extend({ FakeGlowMaterial });
+
+    return (
+      <fakeGlowMaterial
+        ref={ref}
+        key={FakeGlowMaterial.key}
+        side={side}
+        transparent={true}
+        blending={AdditiveBlending}
+        depthTest={false}
+      />
     );
-  }, [falloff, glowInternalRadius, glowColor, glowSharpness]);
+  },
+);
 
-  extend({ FakeGlowMaterial });
-
-  return (
-    <fakeGlowMaterial
-      key={FakeGlowMaterial.key}
-      side={side}
-      transparent={true}
-      blending={AdditiveBlending}
-      depthTest={false}
-    />
-  );
-};
-
-export default FakeGlowMaterial
+export default FakeGlowMaterial;

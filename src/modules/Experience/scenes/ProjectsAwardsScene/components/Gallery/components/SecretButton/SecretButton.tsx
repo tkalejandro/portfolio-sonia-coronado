@@ -1,8 +1,12 @@
 import { Phase } from '@/enums/Experience';
 import { threeHelpers } from '@/helpers';
 import { useAppTheme } from '@/hooks';
-import { ChakraHtml } from '@/modules/Experience/components';
+
 import { useCursor } from '@/modules/Experience/components/Cursor/CursorManager';
+
+import { ChakraHtml, FakeGlowMaterial } from '@/modules/Experience/components';
+import { IFakeGlowMaterial } from '@/modules/Experience/components/FakeGlowMaterial/FakeGlowMaterial';
+
 import { useSoundManagerContext } from '@/modules/Experience/sounds/SoundManager/SoundManager';
 import { useAppSettings } from '@/store';
 import { ElementTransform } from '@/types/ExperienceTypes';
@@ -27,6 +31,9 @@ interface SecretButtonProps {
   element: ElementTransform;
 }
 
+const speed = 3.5;
+const maxMinRange = 0.3;
+
 const ScretButton = ({ element }: SecretButtonProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { onSecretVisible, onSecretNotVisible, onSecretFound } = useSoundManagerContext();
@@ -34,6 +41,8 @@ const ScretButton = ({ element }: SecretButtonProps) => {
   const [secretAppearFirstTime, setSecretAppearFirstTime] = useState(false);
   const phase = useAppSettings((state) => state.phase);
   const secretRef = useRef<Mesh>(null!);
+  const glowRef = useRef<IFakeGlowMaterial | null>(null!);
+
   const { camera } = useThree();
   const theme = useAppTheme();
   const { changeSettings } = useCursor()
@@ -48,7 +57,9 @@ const ScretButton = ({ element }: SecretButtonProps) => {
     await changeSettings("", false, "", false, false)
   };
 
-  useFrame(() => {
+  useFrame((state) => {
+    const clock = state.clock;
+
     if (isSecretReveal || phase !== Phase.Playing || !camera || !secretRef.current) {
       return;
     }
@@ -57,6 +68,21 @@ const ScretButton = ({ element }: SecretButtonProps) => {
     const isMeshVisible = threeHelpers.isObjectInFrustum(secretRef.current, camera);
 
     if (isMeshVisible) {
+      if (!isSecretReveal && glowRef && glowRef.current) {
+        //Give the color intensity
+        glowRef.current.uniforms.glowSharpness.value =
+          Math.sin(clock.elapsedTime * speed) * maxMinRange;
+        // Changes the radius
+        glowRef.current.uniforms.glowInternalRadius.value =
+          Math.sin(-clock.elapsedTime * speed) * maxMinRange;
+        console.log('I Happen');
+      } else {
+        if (glowRef && glowRef.current) {
+          glowRef.current.uniforms.glowSharpness.value = -0.25;
+          glowRef.current.uniforms.glowInternalRadius.value = 1;
+        }
+      }
+
       //Sound callback
       onSecretVisible();
 
@@ -86,8 +112,14 @@ const ScretButton = ({ element }: SecretButtonProps) => {
         }}
         onClick={openSecret}
       >
-        <planeGeometry args={element.scale} />
-        <meshStandardMaterial color="purple" />
+        <boxGeometry args={[...element.scale, 0.125]} />
+        <FakeGlowMaterial
+          ref={glowRef}
+          glowInternalRadius={1}
+          glowSharpness={-0.25}
+          falloff={1.75}
+          glowColor={theme.colors.primary.main}
+        />
       </mesh>
       <ChakraHtml >
         <ButtonGroup>
@@ -142,5 +174,3 @@ const ScretButton = ({ element }: SecretButtonProps) => {
 };
 
 export default ScretButton;
-
-// Function to check if an object is in the camera's frustum
