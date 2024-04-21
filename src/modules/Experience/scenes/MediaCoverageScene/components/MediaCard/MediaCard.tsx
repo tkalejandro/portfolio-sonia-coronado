@@ -8,6 +8,7 @@ import { Box, Flex } from '@react-three/flex';
 import { fontLibrary } from '@/helpers';
 import { useAppBreakpoints, useAppTheme } from '@/hooks';
 import { EnhancedGroup } from '@/modules/Experience/components';
+import { useCursor } from '@/modules/Experience/components/Cursor/CursorManager';
 
 interface MediaProps {
   title: string;
@@ -18,6 +19,7 @@ interface MediaProps {
 
 const MediaCard = ({ title, image, description, url }: MediaProps) => {
   const [hovered, setHover] = useState<boolean>(false);
+  const { changeSettings } = useCursor()
   const [fixedElapse, setFixedElpase] = useState<number>(0);
   const theme = useAppTheme();
   const { isDesktop } = useAppBreakpoints();
@@ -51,9 +53,9 @@ const MediaCard = ({ title, image, description, url }: MediaProps) => {
   });
 
   /**
-   * We will save the last elapsed time durring
+   * We will save the last elapsed time during
    * the animation and save it so the image stay
-   * fixed when mouving the mouse out of mesh
+   * fixed when moving the mouse out of mesh
    * instead of returning to it's initial shape
    */
 
@@ -64,8 +66,28 @@ const MediaCard = ({ title, image, description, url }: MediaProps) => {
   const openNewTab = () => {
     window.open(url, '_blank');
   };
+
+  const hoverCard = (param: boolean) => {
+    setHover(param)
+    changeSettings(
+      "red",
+      param,
+      param ? "View" : "",
+      false,
+      false
+    )
+  }
+
+  const none = () => {
+    document.body.style.cursor = "none"
+  }
+
   return (
-    <EnhancedGroup onClick={openNewTab}>
+    
+    <EnhancedGroup
+      onClick={openNewTab}
+      onPointerEnter={() => none()}
+    >
       <Box
         centerAnchor
         dir="column"
@@ -73,8 +95,10 @@ const MediaCard = ({ title, image, description, url }: MediaProps) => {
         scale={0.95}
         justify="flex-start"
         align="flex-start"
+        
       >
         <Box marginBottom={0.05} centerAnchor>
+          
           <Text
             position={[-0.859, 0, 0]}
             textAlign="left"
@@ -102,8 +126,8 @@ const MediaCard = ({ title, image, description, url }: MediaProps) => {
         <Box marginTop={0.75}>
           <mesh
             ref={ref}
-            onPointerEnter={(event) => setHover(true)}
-            onPointerOut={(event) => setHover(false)}
+            onPointerEnter={() => hoverCard(true)}
+            onPointerOut={() => hoverCard(false)}
           >
             <planeGeometry args={[1.8, 1.2, 1]} />
             {

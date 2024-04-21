@@ -25,6 +25,18 @@ class TextureLibrary {
       map: '/textures/musicNote/note_map.png',
     };
   }
+
+  wind() {
+    return {
+      map: '/textures/wind/wind.png'
+    }
+  }
+
+  face() {
+    return {
+      map: '/textures/insideCursor/face.png'
+    }
+  }
 }
 
 const textureLibrary = new TextureLibrary();

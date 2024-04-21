@@ -1,13 +1,14 @@
-import React from 'react';
-import { Vector3 } from '@react-three/fiber';
+import React, { useRef } from 'react';
+import { Props, Vector3 } from '@react-three/fiber';
 import { Text } from '@react-three/drei';
 import { soniaCoronado } from '@/constants';
 import { fontLibrary } from '@/helpers';
 import { WoodenSignIPoly3D } from '../../models';
 import { useAppBreakpoints, useAppTheme } from '@/hooks';
-import { Forest, Land, Trees } from './components';
+import { Forest, Land, Trees, Wall } from './components';
 import { useRouter } from 'next/navigation';
 import { EnhancedGroup, InvisibleMesh } from '../../components';
+import { Material, Mesh } from 'three';
 
 interface ContactSceneProps {
   position: Vector3;
@@ -21,6 +22,12 @@ const ContactScene = ({ position }: ContactSceneProps) => {
   const router = useRouter();
   const theme = useAppTheme();
   const { isTablet, isBigTablet } = useAppBreakpoints();
+  
+  const linkdinRef = useRef<Props>()
+  const emailRef = useRef<Props>()
+  const numRef = useRef<Props>()
+  const resumeRef = useRef<Props>()
+
   const openLinkedIn = () => {
     window.open(linkedin, '_blank');
   };
@@ -41,7 +48,11 @@ const ContactScene = ({ position }: ContactSceneProps) => {
   };
 
   return (
-    <group position={position}>
+    <group
+      position={position}
+      
+    >
+      <Wall />
       <Land />
       <Trees />
       <Forest position={[isTablet ? 1.5 : 1, 0, -0.6]} rotation={[0, 0.25, 0]} />
@@ -58,9 +69,18 @@ const ContactScene = ({ position }: ContactSceneProps) => {
         <WoodenSignIPoly3D />
         <EnhancedGroup onClick={openLinkedIn}>
           <Text
+          ref={linkdinRef}
             scale={0.12}
             font={fontLibrary.montserrat.extraBold}
             position={[-0.14, 1.69, 0.025]}
+            onPointerEnter={() => {
+              if(linkdinRef.current)
+                linkdinRef.current.color = theme.colors.primary.main
+            }}
+            onPointerLeave={() => {
+              if(linkdinRef.current)
+                linkdinRef.current.color = "white"
+            }}
           >
             LinkedIn
           </Text>
@@ -69,27 +89,60 @@ const ContactScene = ({ position }: ContactSceneProps) => {
           <Text scale={0.09} font={fontLibrary.montserrat.extraBold} position={[0.05, 1.37, 0.025]}>
             Sonia Coronado:
           </Text>
-          <EnhancedGroup onClick={openEmail}>
+          <EnhancedGroup
+            onClick={openEmail}
+          >
             <Text
+              ref={emailRef}
               scale={0.05}
               font={fontLibrary.montserrat.extraBold}
               position={[0.05, 1.24, 0.025]}
+              onPointerEnter={() => {
+                if(emailRef.current)
+                  emailRef.current.color = theme.colors.primary.main
+              }}
+              onPointerLeave={() => {
+                if(emailRef.current)
+                  emailRef.current.color = "white"
+              }}
             >
               {email}
             </Text>
           </EnhancedGroup>
           <EnhancedGroup onClick={openPhone}>
             <Text
+              ref={numRef}
               scale={0.05}
               font={fontLibrary.montserrat.extraBold}
               position={[0.05, 1.12, 0.025]}
+              onPointerEnter={() => {
+                if(numRef.current)
+                  numRef.current.color = theme.colors.primary.main
+              }}
+              onPointerLeave={() => {
+                if(numRef.current)
+                  numRef.current.color = "white"
+              }}
             >
               {phone}
             </Text>
           </EnhancedGroup>
         </group>
         <EnhancedGroup onClick={openResume}>
-          <Text scale={0.12} font={fontLibrary.montserrat.extraBold} position={[0.03, 0.76, 0.025]}>
+          <Text
+            ref={resumeRef}
+            scale={0.12}
+            font={fontLibrary.montserrat.extraBold}
+            position={[0.03, 0.76, 0.025]}
+            onPointerEnter={() => {
+              if(resumeRef.current)
+                resumeRef.current.color = theme.colors.primary.main
+            }}
+            onPointerLeave={() => {
+              if(resumeRef.current)
+                resumeRef.current.color = "white"
+            }}
+          >
             Resume
           </Text>
         </EnhancedGroup>

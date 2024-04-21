@@ -11,10 +11,12 @@ interface EnhancedGroupProps extends GroupProps {
  * @returns
  */
 const EnhancedGroup = ({ children, ...props }: EnhancedGroupProps) => {
+
   return (
     <group
       onPointerEnter={() => {
         document.body.style.cursor = 'pointer';
+        
       }}
       onPointerLeave={() => {
         document.body.style.cursor = 'default';

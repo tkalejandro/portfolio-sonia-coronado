@@ -67,13 +67,7 @@ const AudioLibraryScene = ({ position }: AudioLibrarySceneProps) => {
 
   const handlePointerLeave = () => {
     setIsDragging(false);
-
-    document.body.style.cursor = 'default';
   };
-  const handlePointerEnter = () => {
-    document.body.style.cursor = 'grab';
-  };
-
   const xRadius = isDesktop ? 1.75 : isBigTablet ? 1.5 : 1;
   const zRadius = isDesktop ? 0.75 : isBigTablet ? 0.65 : 1.8;
   const calculateCoverPositions = (numCovers: number, rotationAngle: number) => {
@@ -130,7 +124,6 @@ const AudioLibraryScene = ({ position }: AudioLibrarySceneProps) => {
         onPointerDown={handlePointerDown}
         onPointerUp={dragFalse}
         onPointerLeave={handlePointerLeave}
-        onPointerEnter={handlePointerEnter}
         invisibleSize={[screenWidth, 1.3, 0]}
         invisiblePosition={[0, 0, 0.85]}
       >

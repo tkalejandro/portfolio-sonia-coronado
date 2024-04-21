@@ -13,7 +13,7 @@ import ProjectsAwardsScene from './scenes/ProjectsAwardsScene/ProjectsAwardsScen
 import { Perf } from 'r3f-perf';
 import { useAppSettings, useDeveloperSettings } from '@/store';
 import { useControls } from 'leva';
-import { DebugButton } from './components';
+import { DebugButton, Cursor, CursorManage } from './components';
 import { MainCamera } from './camera';
 import { MainLight } from './lights';
 import { SoundManager } from './sounds';
@@ -28,7 +28,7 @@ const Experience = () => {
   const experienceLoaded = useAppSettings((state) => state.experienceLoaded);
   const [distance, setDistance] = useState<number>(0);
   const [dpr, setDpr] = useState(1.5);
-  const { isBigTablet } = useAppBreakpoints();
+  const { isBigTablet, isDesktop } = useAppBreakpoints();
   // const {
   //   //welcomePosition,
   //   //addMusicPosition,
@@ -68,31 +68,34 @@ const Experience = () => {
       <div id="experience">
         <SoundManager>
           <Suspense fallback={<Loader />}>
-            <Canvas flat dpr={dpr}>
-              <PerformanceMonitor onIncline={() => setDpr(2)} onDecline={() => setDpr(1)}>
-                <ScrollControls
-                  pages={isBigTablet ? 4 : 6}
-                  distance={distance}
-                  eps={0.00001}
-                  enabled={experienceLoaded}
-                >
-                  <MainCamera />
-                  <MainLight />
-                  {debugMode && <Perf position="top-left" />}
-                  <WelcomeScene position={welcomePosition} />
-                  <AddMusicScene position={addMusicPosition} />
-                  <AboutScene
-                    position={aboutPosition}
-                    //We need the sum of all scenesY for the face.
-                    scenePositionY={welcomePosition[1] + addMusicPosition[1]}
-                  />
-                  <ProjectsAwardsScene position={projectsAwardsPosition} />
-                  {/* <AudioLibraryScene position={audioLibraryPosition} /> */}
-                  <MediaCoverageScene position={mediaCoveragePosition} />
-                  <ContactScene position={contactPosition} />
-                </ScrollControls>
-              </PerformanceMonitor>
-            </Canvas>
+            <CursorManage>
+              <Canvas flat dpr={dpr}>
+                <PerformanceMonitor onIncline={() => setDpr(2)} onDecline={() => setDpr(1)}>
+                  <ScrollControls
+                    pages={isBigTablet ? 4 : 6}
+                    distance={distance}
+                    eps={0.00001}
+                    enabled={experienceLoaded}
+                  >
+                    {isDesktop && <Cursor />}
+                    <MainCamera />
+                    <MainLight />
+                    {debugMode && <Perf position="top-left" />}
+                    <WelcomeScene position={welcomePosition} />
+                    <AddMusicScene position={addMusicPosition} />
+                    <AboutScene
+                      position={aboutPosition}
+                      //We need the sum of all scenesY for the face.
+                      scenePositionY={welcomePosition[1] + addMusicPosition[1]}
+                    />
+                    <ProjectsAwardsScene position={projectsAwardsPosition} />
+                    {/* <AudioLibraryScene position={audioLibraryPosition} /> */}
+                    <MediaCoverageScene position={mediaCoveragePosition} />
+                    <ContactScene position={contactPosition} />
+                  </ScrollControls>
+                </PerformanceMonitor>
+              </Canvas>
+            </CursorManage>
           </Suspense>
         </SoundManager>
         <DebugButton />
