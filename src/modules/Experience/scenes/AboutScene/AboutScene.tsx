@@ -6,16 +6,8 @@ import { ThreeDButton } from '../../components';
 import { useAppBreakpoints, useAppTheme } from '@/hooks';
 import * as THREE from 'three';
 
-import {
-  Bloom,
-  DepthOfField,
-  EffectComposer,
-  Glitch,
-  Noise,
-  Scanline,
-  Vignette,
-} from '@react-three/postprocessing';
-import { Vector2 } from 'three';
+import { Material, Mesh, MeshBasicMaterial, MeshStandardMaterial, Vector2 } from 'three';
+import { fontLibrary } from '@/helpers';
 
 interface AboutSceneProps {
   position: Vector3;
@@ -26,40 +18,93 @@ const AboutScene = ({ position, scenePositionY }: AboutSceneProps) => {
   const theme = useAppTheme();
   const { isBigTablet } = useAppBreakpoints();
 
-  // This reference will give us direct access to the mesh
-  const meshRef = useRef<THREE.Mesh>(null);
-
+  const supportBackgroundRef = useRef<MeshBasicMaterial>(null);
   const primaryColor = theme.colors.primary.main;
   const successColor = theme.colors.success[900];
   const infoColor = theme.colors.info[900];
   const warningColor = theme.colors.warning[900];
   const dangerColor = theme.colors.danger[900];
   const [selectedColor, setSelectedColor] = useState<Color>(primaryColor);
+  const [message, setMessage] = useState<string>(
+    'Bet on the magic of music: Switch the track, feel the vibe!',
+  );
+  const [bgColor, setBgColor] = useState<Color>(theme.colors.background);
 
   // Subscribe this component to the render-loop, rotate the mesh every frame
   useFrame((state, delta) => {
-    if (meshRef.current) {
-      // Check if meshRef.current is defined
-      meshRef.current.rotation.x += delta;
+    if (supportBackgroundRef && supportBackgroundRef.current) {
+      switch (selectedColor) {
+        case successColor: {
+          supportBackgroundRef.current.color = new THREE.Color(theme.colors.success[400]);
+          break;
+        }
+        case infoColor: {
+          console.log('I happen');
+          supportBackgroundRef.current.color = new THREE.Color(theme.colors.info[200]);
+          break;
+        }
+        case dangerColor: {
+          supportBackgroundRef.current.color = new THREE.Color(theme.colors.danger[800]);
+          break;
+        }
+        case warningColor: {
+          setBgColor(theme.colors.background);
+          supportBackgroundRef.current.color = new THREE.Color(theme.colors.warning[400]);
+          break;
+        }
+        default:
+          setBgColor(theme.colors.background);
+          break;
+      }
     }
   });
 
   const selectButton = (value: Color) => {
     if (value === selectedColor) {
       //Same color was selected
-      setSelectedColor(theme.colors.grey);
+      setSelectedColor(primaryColor);
       return;
     }
     setSelectedColor(value);
   };
+
+  useEffect(() => {
+    console.log(selectedColor);
+    switch (selectedColor) {
+      case successColor: {
+        setMessage("You've hit the jackpot");
+        setBgColor(theme.colors.success[900]);
+        break;
+      }
+      case infoColor: {
+        setMessage('Uncover the hidden beat:');
+        setBgColor(theme.colors.background);
+        break;
+      }
+      case dangerColor: {
+        setMessage('Alert! Site under attack');
+        setBgColor(theme.colors.primary.main);
+        break;
+      }
+      case warningColor: {
+        setMessage('Approach with caution soldier');
+        setBgColor(theme.colors.background);
+        break;
+      }
+      default:
+        setMessage('Bet on the magic of music: Switch the track, feel the vibe!');
+        setBgColor(theme.colors.background);
+        break;
+    }
+  }, [selectedColor]);
 
   return (
     <>
       <group position={position} scale={0.6}>
         <Center disableX>
           <MovingFace selectedColor={selectedColor} scenePositionY={scenePositionY} />
-          <Text fontSize={0.1}>
-            Bet on the magic of music: Switch the track, feel the vibe!
+          <Text fontSize={0.1} font={fontLibrary.montserrat.medium}>
+            {message}
             <meshNormalMaterial />
           </Text>
           <group position={[0, -1, 0]}>
@@ -98,7 +143,7 @@ const AboutScene = ({ position, scenePositionY }: AboutSceneProps) => {
       {selectedColor !== primaryColor && (
         <mesh position={[0, 0, -1]}>
           <planeGeometry args={[50, 50]} />
-          <meshStandardMaterial color="purple" />
+          <meshBasicMaterial color={bgColor} ref={supportBackgroundRef} />
         </mesh>
       )}
 

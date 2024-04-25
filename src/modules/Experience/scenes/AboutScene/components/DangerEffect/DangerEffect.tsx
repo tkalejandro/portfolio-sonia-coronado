@@ -11,8 +11,8 @@ const DangerEffect = () => {
       {/* <Vignette eskil={false} offset={0.1} darkness={1.1} /> */}
 
       <Glitch
-        delay={new Vector2(1.5, 3.5)} // min and max glitch delay
-        duration={new Vector2(0.6, 1.0)} // min and max glitch duration
+        delay={new Vector2(0.5, 1.5)} // min and max glitch delay
+        duration={new Vector2(0.6, 1.5)} // min and max glitch duration
         strength={new Vector2(0.3, 1.0)} // min and max glitch strength
         //mode={GlitchMode.SPORADIC} // glitch mode
         active // turn on/off the effect (switches between "mode" prop and GlitchMode.DISABLED)
