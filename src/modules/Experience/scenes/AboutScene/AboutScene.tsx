@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Color, useFrame, Vector3 } from '@react-three/fiber';
+import { Color, Props, useFrame, Vector3 } from '@react-three/fiber';
 import { Center, Text } from '@react-three/drei';
 import { DangerEffect, InfoEffect, MovingFace, SuccessEffect, WarningEffect } from './components';
 import { ThreeDButton } from '../../components';
@@ -8,17 +8,23 @@ import * as THREE from 'three';
 
 import { Material, Mesh, MeshBasicMaterial, MeshStandardMaterial, Vector2 } from 'three';
 import { fontLibrary } from '@/helpers';
+import { ForwardRefComponent } from '@react-three/drei/helpers/ts-utils';
 
 interface AboutSceneProps {
   position: Vector3;
   scenePositionY: number;
 }
 
+// interface TextDrei extends ForwardRefComponent<Props, any> {
+//   color:
+// }
+
 const AboutScene = ({ position, scenePositionY }: AboutSceneProps) => {
   const theme = useAppTheme();
   const { isBigTablet } = useAppBreakpoints();
 
   const supportBackgroundRef = useRef<MeshBasicMaterial>(null);
+  const textRef = useRef<MeshStandardMaterial>(null);
   const primaryColor = theme.colors.primary.main;
   const successColor = theme.colors.success[900];
   const infoColor = theme.colors.info[900];
@@ -39,7 +45,6 @@ const AboutScene = ({ position, scenePositionY }: AboutSceneProps) => {
           break;
         }
         case infoColor: {
-          console.log('I happen');
           supportBackgroundRef.current.color = new THREE.Color(theme.colors.info[200]);
           break;
         }
@@ -48,12 +53,33 @@ const AboutScene = ({ position, scenePositionY }: AboutSceneProps) => {
           break;
         }
         case warningColor: {
-          setBgColor(theme.colors.background);
           supportBackgroundRef.current.color = new THREE.Color(theme.colors.warning[400]);
           break;
         }
         default:
-          setBgColor(theme.colors.background);
+          break;
+      }
+    }
+    if (textRef && textRef.current) {
+      switch (selectedColor) {
+        case successColor: {
+          textRef.current.color = new THREE.Color(theme.colors.success[900]);
+          break;
+        }
+        case infoColor: {
+          textRef.current.color = new THREE.Color(theme.colors.primary[100]);
+          break;
+        }
+        case dangerColor: {
+          textRef.current.color = new THREE.Color(theme.colors.danger[100]);
+          break;
+        }
+        case warningColor: {
+          textRef.current.color = new THREE.Color(theme.colors.danger[900]);
+          break;
+        }
+        default:
+          textRef.current.color = new THREE.Color(theme.colors.primary[400]);
           break;
       }
     }
@@ -73,27 +99,22 @@ const AboutScene = ({ position, scenePositionY }: AboutSceneProps) => {
     switch (selectedColor) {
       case successColor: {
         setMessage("You've hit the jackpot");
-        setBgColor(theme.colors.success[900]);
         break;
       }
       case infoColor: {
         setMessage('Uncover the hidden beat:');
-        setBgColor(theme.colors.background);
         break;
       }
       case dangerColor: {
         setMessage('Alert! Site under attack');
-        setBgColor(theme.colors.primary.main);
         break;
       }
       case warningColor: {
         setMessage('Approach with caution soldier');
-        setBgColor(theme.colors.background);
         break;
       }
       default:
         setMessage('Bet on the magic of music: Switch the track, feel the vibe!');
-        setBgColor(theme.colors.background);
         break;
     }
   }, [selectedColor]);
@@ -105,11 +126,11 @@ const AboutScene = ({ position, scenePositionY }: AboutSceneProps) => {
           <MovingFace selectedColor={selectedColor} scenePositionY={scenePositionY} />
           <Text fontSize={0.1} font={fontLibrary.montserrat.medium}>
             {message}
-            <meshNormalMaterial />
+            <meshStandardMaterial ref={textRef} color={theme.colors.primary[400]} />
           </Text>
           <group position={[0, -1, 0]}>
             <ThreeDButton
-              onClick={() => selectButton(theme.colors.success['900'])}
+              onClick={() => selectButton(successColor)}
               position={isBigTablet ? [-1.5, 0.5, 0] : [-0.7, 0.5, 0]}
               text="Succcess"
               color={selectedColor === successColor ? 'success' : 'primary'}
@@ -117,21 +138,21 @@ const AboutScene = ({ position, scenePositionY }: AboutSceneProps) => {
             />
 
             <ThreeDButton
-              onClick={() => selectButton(theme.colors.warning['900'])}
+              onClick={() => selectButton(warningColor)}
               position={isBigTablet ? [-0.5, 0.5, 0] : [0.7, 0.5, 0]}
               text="Warning"
               color={selectedColor === warningColor ? 'warning' : 'primary'}
               size="xl"
             />
             <ThreeDButton
-              onClick={() => selectButton(theme.colors.danger['900'])}
+              onClick={() => selectButton(dangerColor)}
               position={isBigTablet ? [0.5, 0.5, 0] : [-0.7, 0, 0]}
               text="Danger"
               color={selectedColor === dangerColor ? 'danger' : 'primary'}
               size="xl"
             />
             <ThreeDButton
-              onClick={() => selectButton(theme.colors.info['900'])}
+              onClick={() => selectButton(infoColor)}
               position={isBigTablet ? [1.5, 0.5, 0] : [0.7, 0, 0]}
               text="Info"
               color={selectedColor === infoColor ? 'info' : 'primary'}
