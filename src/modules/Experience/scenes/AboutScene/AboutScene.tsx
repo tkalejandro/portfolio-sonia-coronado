@@ -15,10 +15,6 @@ interface AboutSceneProps {
   scenePositionY: number;
 }
 
-// interface TextDrei extends ForwardRefComponent<Props, any> {
-//   color:
-// }
-
 const AboutScene = ({ position, scenePositionY }: AboutSceneProps) => {
   const theme = useAppTheme();
   const { isBigTablet } = useAppBreakpoints();
@@ -167,17 +163,18 @@ const AboutScene = ({ position, scenePositionY }: AboutSceneProps) => {
           <meshBasicMaterial color={bgColor} ref={supportBackgroundRef} />
         </mesh>
       )}
+      <group position={position}>
+        {/* FOR SUCCESS  */}
+        {selectedColor === successColor && <SuccessEffect scenePositionY={scenePositionY} />}
+        {/* FOR INFO */}
+        {selectedColor === infoColor && <InfoEffect />}
 
-      {/* FOR SUCCESS  */}
-      {selectedColor === successColor && <SuccessEffect />}
-      {/* FOR INFO */}
-      {selectedColor === infoColor && <InfoEffect />}
+        {/* FOR WARNING */}
+        {selectedColor === warningColor && <WarningEffect />}
 
-      {/* FOR WARNING */}
-      {selectedColor === warningColor && <WarningEffect />}
-
-      {/* FOR DANGER */}
-      {selectedColor === dangerColor && <DangerEffect />}
+        {/* FOR DANGER */}
+        {selectedColor === dangerColor && <DangerEffect />}
+      </group>
     </>
   );
 };
