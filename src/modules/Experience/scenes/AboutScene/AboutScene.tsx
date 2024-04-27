@@ -49,7 +49,7 @@ const AboutScene = ({ position, scenePositionY }: AboutSceneProps) => {
           break;
         }
         case warningColor: {
-          supportBackgroundRef.current.color = new THREE.Color(theme.colors.warning[400]);
+          supportBackgroundRef.current.color = new THREE.Color(theme.colors.warning[500]);
           break;
         }
         default:
@@ -157,21 +157,20 @@ const AboutScene = ({ position, scenePositionY }: AboutSceneProps) => {
           </group>
         </Center>
       </group>
-      {selectedColor !== primaryColor && (
-        <mesh position={[0, 0, -1]}>
-          <planeGeometry args={[50, 50]} />
-          <meshBasicMaterial color={bgColor} ref={supportBackgroundRef} />
-        </mesh>
-      )}
+
       <group position={position}>
+        {selectedColor !== primaryColor && (
+          <mesh position={[0, 0, -1]}>
+            <planeGeometry args={[50, 50]} />
+            <meshBasicMaterial color={bgColor} ref={supportBackgroundRef} />
+          </mesh>
+        )}
         {/* FOR SUCCESS  */}
-        {selectedColor === successColor && <SuccessEffect scenePositionY={scenePositionY} />}
+        {selectedColor === successColor && <SuccessEffect />}
         {/* FOR INFO */}
         {selectedColor === infoColor && <InfoEffect />}
-
         {/* FOR WARNING */}
         {selectedColor === warningColor && <WarningEffect />}
-
         {/* FOR DANGER */}
         {selectedColor === dangerColor && <DangerEffect />}
       </group>

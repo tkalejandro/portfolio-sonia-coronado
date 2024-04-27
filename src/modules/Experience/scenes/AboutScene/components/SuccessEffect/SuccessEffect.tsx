@@ -4,11 +4,7 @@ import { Bloom, EffectComposer } from '@react-three/postprocessing';
 import React, { useRef } from 'react';
 import { ShaderMaterial } from 'three';
 
-interface SucccessEffectProps {
-  scenePositionY: number;
-}
-
-const SuccessEffect = ({ scenePositionY }: SucccessEffectProps) => {
+const SuccessEffect = () => {
   const brightShaderRef = useRef<ShaderMaterial>(null);
 
   useFrame((state, delta) => {
