@@ -12,7 +12,6 @@ import {
 import ProjectsAwardsScene from './scenes/ProjectsAwardsScene/ProjectsAwardsScene';
 import { Perf } from 'r3f-perf';
 import { useAppSettings, useDeveloperSettings } from '@/store';
-import { useControls } from 'leva';
 import { DebugButton, Cursor, CursorManage } from './components';
 import { MainCamera } from './camera';
 import { MainLight } from './lights';
@@ -58,11 +57,16 @@ const Experience = () => {
     setDistance(2);
   }, [experienceLoaded]);
 
-  const scrollControls = useControls('Scroll Controls', {
-    pages: { value: 4, step: 0.1 },
-    eps: { value: 0.00001, step: 0.00001 },
-  });
+  // const scrollControls = useControls('Scroll Controls', {
+  //   pages: { value: 4, step: 0.1 },
+  //   eps: { value: 0.00001, step: 0.00001 },
+  // });
 
+  const isProduction =
+    window.location.href === 'https://soniacoronadomusic.com/' ||
+    window.location.href === 'https://www.soniacoronadomusic.com/';
+
+  const isForcedDebug = window.location.hash === '#forceDebug';
   return (
     <>
       <div id="experience">
@@ -98,7 +102,7 @@ const Experience = () => {
             </CursorManage>
           </Suspense>
         </SoundManager>
-        <DebugButton />
+        {(!isProduction || isForcedDebug) && <DebugButton />}
       </div>
     </>
   );
