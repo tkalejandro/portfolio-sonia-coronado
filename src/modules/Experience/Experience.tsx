@@ -18,7 +18,6 @@ import { MainLight } from './lights';
 import { SoundManager } from './sounds';
 import { Loader } from './loader';
 import { useAppBreakpoints } from '@/hooks';
-
 /**
  * Heart of the 3D App
  */
@@ -26,6 +25,7 @@ const Experience = () => {
   const debugMode = useDeveloperSettings((state) => state.debugMode);
   const experienceLoaded = useAppSettings((state) => state.experienceLoaded);
   const [distance, setDistance] = useState<number>(0);
+  const [isDebug, setIsDebug] = useState<boolean>(false);
   const [dpr, setDpr] = useState(1.5);
   const { isBigTablet, isDesktop } = useAppBreakpoints();
   // const {
@@ -57,16 +57,27 @@ const Experience = () => {
     setDistance(2);
   }, [experienceLoaded]);
 
+  useEffect(() => {
+    if (window.location.hash === '#forceDebug') {
+      setIsDebug(true);
+      return;
+    }
+
+    if (
+      window.location.href === 'https://soniacoronadomusic.com/' ||
+      window.location.href === 'https://www.soniacoronadomusic.com/'
+    ) {
+      setIsDebug(false);
+      return;
+    }
+
+    setIsDebug(true);
+  }, []);
   // const scrollControls = useControls('Scroll Controls', {
   //   pages: { value: 4, step: 0.1 },
   //   eps: { value: 0.00001, step: 0.00001 },
   // });
 
-  const isProduction =
-    window.location.href === 'https://soniacoronadomusic.com/' ||
-    window.location.href === 'https://www.soniacoronadomusic.com/';
-
-  const isForcedDebug = window.location.hash === '#forceDebug';
   return (
     <>
       <div id="experience">
@@ -102,7 +113,7 @@ const Experience = () => {
             </CursorManage>
           </Suspense>
         </SoundManager>
-        {(!isProduction || isForcedDebug) && <DebugButton />}
+        {isDebug && <DebugButton />}
       </div>
     </>
   );
