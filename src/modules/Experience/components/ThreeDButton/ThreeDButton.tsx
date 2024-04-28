@@ -28,8 +28,6 @@ interface ThreeDButtonProps extends GroupProps {
   isSelected?: boolean;
 }
 
-
-
 const ThreeDButton = ({
   size = 'md',
   isSelected = false,
@@ -44,8 +42,8 @@ const ThreeDButton = ({
   const [buttonScale, setButtonScale] = useState<number | null>(null);
   const [buttonColor, setButtonColor] = useState<string>();
   const [textColor, setTextColor] = useState<string>();
-  
-  const { changeSettings } = useCursor()
+
+  const { changeSettings } = useCursor();
 
   useEffect(() => {
     colorToUse();
@@ -120,9 +118,16 @@ const ThreeDButton = ({
     <group
       {...props}
       scale={props.scale ?? [buttonScale, buttonScale, 1]}
-      onPointerEnter={() => changeSettings("", true, "", false, false)}
-      onPointerLeave={() => changeSettings("", false, "", false, false)}
-      >
+      onPointerEnter={() => {
+        document.body.style.cursor = 'pointer';
+        changeSettings('', true, '', false, false);
+      }}
+      onPointerLeave={() => {
+        document.body.style.cursor = 'default';
+
+        changeSettings('', false, '', false, false);
+      }}
+    >
       {/* Button */}
 
       <RoundedBox
