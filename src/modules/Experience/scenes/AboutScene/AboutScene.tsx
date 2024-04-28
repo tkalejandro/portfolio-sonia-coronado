@@ -30,7 +30,6 @@ const AboutScene = ({ position, scenePositionY }: AboutSceneProps) => {
   const [message, setMessage] = useState<string>(
     'Bet on the magic of music: Switch the track, feel the vibe!',
   );
-  const [bgColor, setBgColor] = useState<Color>(theme.colors.background);
 
   // Subscribe this component to the render-loop, rotate the mesh every frame
   useFrame((state, delta) => {
@@ -91,7 +90,6 @@ const AboutScene = ({ position, scenePositionY }: AboutSceneProps) => {
   };
 
   useEffect(() => {
-    console.log(selectedColor);
     switch (selectedColor) {
       case successColor: {
         setMessage("You've hit the jackpot");
@@ -120,7 +118,12 @@ const AboutScene = ({ position, scenePositionY }: AboutSceneProps) => {
       <group position={position} scale={0.6}>
         <Center disableX>
           <MovingFace selectedColor={selectedColor} scenePositionY={scenePositionY} />
-          <Text fontSize={0.1} font={fontLibrary.montserrat.medium}>
+          <Text
+            fontSize={0.1}
+            font={fontLibrary.montserrat.medium}
+            maxWidth={2.5}
+            textAlign="center"
+          >
             {message}
             <meshStandardMaterial ref={textRef} color={theme.colors.primary[400]} />
           </Text>
@@ -162,7 +165,7 @@ const AboutScene = ({ position, scenePositionY }: AboutSceneProps) => {
         {selectedColor !== primaryColor && (
           <mesh position={[0, 0, -1]}>
             <planeGeometry args={[50, 50]} />
-            <meshBasicMaterial color={bgColor} ref={supportBackgroundRef} />
+            <meshBasicMaterial ref={supportBackgroundRef} />
           </mesh>
         )}
         {/* FOR SUCCESS  */}

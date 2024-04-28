@@ -18,7 +18,6 @@ const Sphere = ({ size = 1, amount = 50, color = 'white', ...props }) => {
       }
       sphereRef.current.position.z += speed * delta;
     }
-    console.log(sphereRef.current?.position);
   });
   return (
     <mesh ref={sphereRef} {...props}>

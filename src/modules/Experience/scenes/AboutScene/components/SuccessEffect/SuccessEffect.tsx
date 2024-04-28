@@ -15,7 +15,7 @@ const SuccessEffect = () => {
 
   return (
     <>
-      <mesh scale={10} position={[0, 0, -0.5]}>
+      <mesh scale={20} position={[0, 0, -0.5]}>
         <planeGeometry />
         <shaderMaterial
           ref={brightShaderRef}
@@ -41,4 +41,6 @@ const SuccessEffect = () => {
   );
 };
 
-export default SuccessEffect;
+const MemoizedSuccessEffect = React.memo(SuccessEffect);
+
+export default MemoizedSuccessEffect;
