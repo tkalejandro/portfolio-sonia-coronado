@@ -46,16 +46,17 @@ class SoundHelpers {
 
       // Calculate the new volume for this frame
       const newVolume = currentVolume + volumeChangePerFrame * currentFrame;
-      
-      // Update the volume (replace this with your actual volume update logic)
-      audioElement.current.volume = newVolume;
-      //console.log(`Updating volume to: ${newVolume.toFixed(2)}`);
+      if (audioElement && audioElement.current) {
+        // Update the volume (replace this with your actual volume update logic)
+        audioElement.current.volume = newVolume;
+        //console.log(`Updating volume to: ${newVolume.toFixed(2)}`);
 
-      // Check if the target volume is reached
-      if (currentFrame === totalFrames) {
-        clearInterval(intervalId);
-        //console.log('Volume change complete');
-        setProgress(false);
+        // Check if the target volume is reached
+        if (currentFrame === totalFrames) {
+          clearInterval(intervalId);
+          //console.log('Volume change complete');
+          setProgress(false);
+        }
       }
     }, frameDuration);
   };
