@@ -2,8 +2,6 @@ import { useAppTheme } from '@/hooks';
 import { FakeGlowMaterial } from '@/modules/Experience/components';
 import { EffectComposer, Scanline } from '@react-three/postprocessing';
 import React, { useRef } from 'react';
-import { SecretButton } from '../../../ProjectsAwardsScene/components/Gallery/components';
-import * as THREE from 'three';
 import { IFakeGlowMaterial } from '@/modules/Experience/components/FakeGlowMaterial/FakeGlowMaterial';
 import { useFrame } from '@react-three/fiber';
 
@@ -40,7 +38,6 @@ const InfoEffect = () => {
       </mesh>
       <EffectComposer>
         <Scanline
-          //blendFunction={BlendFunction.OVERLAY} // blend mode
           density={2.25} // scanline density
         />
       </EffectComposer>

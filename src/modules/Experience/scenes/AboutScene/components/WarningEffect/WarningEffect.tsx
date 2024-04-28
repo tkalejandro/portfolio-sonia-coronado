@@ -47,7 +47,6 @@ const WarningEffect = () => {
       <EffectComposer>
         <Noise
           premultiply // enables or disables noise premultiplication
-          //blendFunction={BlendFunction.ADD} // blend mode
         />
       </EffectComposer>
     </>

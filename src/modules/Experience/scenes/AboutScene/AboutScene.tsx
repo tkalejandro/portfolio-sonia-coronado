@@ -1,14 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Color, Props, useFrame, Vector3 } from '@react-three/fiber';
+import { Color, useFrame, Vector3 } from '@react-three/fiber';
 import { Center, Text } from '@react-three/drei';
 import { DangerEffect, InfoEffect, MovingFace, SuccessEffect, WarningEffect } from './components';
 import { ThreeDButton } from '../../components';
 import { useAppBreakpoints, useAppTheme } from '@/hooks';
 import * as THREE from 'three';
-
-import { Material, Mesh, MeshBasicMaterial, MeshStandardMaterial, Vector2 } from 'three';
+import { MeshBasicMaterial, MeshStandardMaterial } from 'three';
 import { fontLibrary } from '@/helpers';
-import { ForwardRefComponent } from '@react-three/drei/helpers/ts-utils';
 
 interface AboutSceneProps {
   position: Vector3;
