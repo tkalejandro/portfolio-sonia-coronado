@@ -47,7 +47,7 @@ const Resume = () => {
       if (emailRef.current) emailRef.current.value = '';
       if (textAreaRef.current) textAreaRef.current.value = '';
     } catch (e) {
-      console.log(e);
+      console.warn(e);
     }
   };
 

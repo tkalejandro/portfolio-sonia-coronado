@@ -11,9 +11,10 @@ import { fontLibrary } from '@/helpers';
 interface AboutSceneProps {
   position: Vector3;
   scenePositionY: number;
+  setShouldScroll: (value: boolean) => void;
 }
 
-const AboutScene = ({ position, scenePositionY }: AboutSceneProps) => {
+const AboutScene = ({ position, scenePositionY, setShouldScroll }: AboutSceneProps) => {
   const theme = useAppTheme();
   const { isBigTablet } = useAppBreakpoints();
 
@@ -78,13 +79,27 @@ const AboutScene = ({ position, scenePositionY }: AboutSceneProps) => {
     }
   });
 
+  const reset = () => {
+    setSelectedColor(primaryColor);
+    setShouldScroll(true);
+  };
   const selectButton = (value: Color) => {
+    //Save the moment it was click
     if (value === selectedColor) {
       //Same color was selected
-      setSelectedColor(primaryColor);
+      reset();
       return;
     }
     setSelectedColor(value);
+
+    // //TODO When selecting we dont allow scroll and we wait 10s until the tune is finish.
+    setShouldScroll(false);
+    const seconds = 5 * 1000;
+    setTimeout(() => {
+      // Go back!.
+      window.scrollTo(0, 0.27);
+      reset();
+    }, seconds);
   };
 
   useEffect(() => {

@@ -45,16 +45,16 @@ const ScretButton = ({ element }: SecretButtonProps) => {
 
   const { camera } = useThree();
   const theme = useAppTheme();
-  const { changeSettings } = useCursor()
-  const openSecret = async() => {
+  const { changeSettings } = useCursor();
+  const openSecret = async () => {
     await onOpen();
     await setIsSecretReveal(true);
   };
 
-  const closeSecret = async() => {
+  const closeSecret = async () => {
     await onSecretFound();
     await onClose();
-    await changeSettings("", false, "", false, false)
+    await changeSettings('', false, '', false, false);
   };
 
   useFrame((state) => {
@@ -75,7 +75,6 @@ const ScretButton = ({ element }: SecretButtonProps) => {
         // Changes the radius
         glowRef.current.uniforms.glowInternalRadius.value =
           Math.sin(-clock.elapsedTime * speed) * maxMinRange;
-        console.log('I Happen');
       } else {
         if (glowRef && glowRef.current) {
           glowRef.current.uniforms.glowSharpness.value = -0.25;
@@ -102,13 +101,12 @@ const ScretButton = ({ element }: SecretButtonProps) => {
         ref={secretRef}
         position={element.position}
         onPointerEnter={() => {
-          changeSettings("", true, "Click", false, true)
-          document.body.style.cursor = "none"
-
+          changeSettings('', true, 'Click', false, true);
+          document.body.style.cursor = 'none';
         }}
         onPointerLeave={() => {
-          changeSettings("", false, "", false, false)
-          document.body.style.cursor = "default"
+          changeSettings('', false, '', false, false);
+          document.body.style.cursor = 'default';
         }}
         onClick={openSecret}
       >
@@ -121,52 +119,52 @@ const ScretButton = ({ element }: SecretButtonProps) => {
           glowColor={theme.colors.primary.main}
         />
       </mesh>
-      <ChakraHtml >
+      <ChakraHtml>
         <ButtonGroup>
-        <Modal isCentered isOpen={isOpen} onClose={closeSecret} size="xl">
-          <ModalOverlay  />
-          <mesh>
-          <planeGeometry args={element.scale} />
-          <meshStandardMaterial color="purple" />
-          </mesh>
-          <ModalContent margin={4} >
-            <ModalHeader fontSize="medium" color={theme.colors.primary.main}>
-              {'You found me!'}
-            </ModalHeader>
-            <ModalCloseButton />
-            <ModalBody fontWeight={300}>
-              <Text fontSize="small">
-                Music, like a hidden key, unlocks emotions and transforms perception, turning
-                ordinary moments into extraordinary discoveries.
-              </Text>
-              <Text fontSize="small" my={4}>
-                Thanks to this magic, I've been honored with the following awards:
-              </Text>
-              <UnorderedList fontSize="small">
-                <ListItem fontStyle="italic" mb={4}>
-                  <strong>MPSE Golden Reel Award </strong>for Outstanding Achievement in{' '}
-                  <strong>Sound Editing for Computer Cinematic</strong>. As a music editor for{' '}
-                  <strong>COD</strong> (2020) and <strong>TLOU2</strong> (2021).
-                </ListItem>
-                <ListItem fontStyle="italic">
-                  <strong> MPSE Golden Reel Award </strong>for Outstanding Achievement in{' '}
-                  <strong>Sound Editing for Computer Interactive Gameplay </strong>. As a music
-                  editor for <strong>COD</strong> (2020) and <strong>TLOU2</strong> (2021).
-                </ListItem>
-                <ListItem fontStyle="italic">
-                  Outstanding Achievement in{' '}
-                  <strong>Music Editing – Game Music As a supervising music editor</strong> for{' '}
-                  <strong>GOWR</strong> (2023).
-                </ListItem>
-              </UnorderedList>
-            </ModalBody>
-            <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={closeSecret}>
-                Feelin' it!
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
+          <Modal isCentered isOpen={isOpen} onClose={closeSecret} size="xl">
+            <ModalOverlay />
+            <mesh>
+              <planeGeometry args={element.scale} />
+              <meshStandardMaterial color="purple" />
+            </mesh>
+            <ModalContent margin={4}>
+              <ModalHeader fontSize="medium" color={theme.colors.primary.main}>
+                {'You found me!'}
+              </ModalHeader>
+              <ModalCloseButton />
+              <ModalBody fontWeight={300}>
+                <Text fontSize="small">
+                  Music, like a hidden key, unlocks emotions and transforms perception, turning
+                  ordinary moments into extraordinary discoveries.
+                </Text>
+                <Text fontSize="small" my={4}>
+                  Thanks to this magic, I've been honored with the following awards:
+                </Text>
+                <UnorderedList fontSize="small">
+                  <ListItem fontStyle="italic" mb={4}>
+                    <strong>MPSE Golden Reel Award </strong>for Outstanding Achievement in{' '}
+                    <strong>Sound Editing for Computer Cinematic</strong>. As a music editor for{' '}
+                    <strong>COD</strong> (2020) and <strong>TLOU2</strong> (2021).
+                  </ListItem>
+                  <ListItem fontStyle="italic">
+                    <strong> MPSE Golden Reel Award </strong>for Outstanding Achievement in{' '}
+                    <strong>Sound Editing for Computer Interactive Gameplay </strong>. As a music
+                    editor for <strong>COD</strong> (2020) and <strong>TLOU2</strong> (2021).
+                  </ListItem>
+                  <ListItem fontStyle="italic">
+                    Outstanding Achievement in{' '}
+                    <strong>Music Editing – Game Music As a supervising music editor</strong> for{' '}
+                    <strong>GOWR</strong> (2023).
+                  </ListItem>
+                </UnorderedList>
+              </ModalBody>
+              <ModalFooter>
+                <Button colorScheme="blue" mr={3} onClick={closeSecret}>
+                  Feelin' it!
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
         </ButtonGroup>
       </ChakraHtml>
     </>

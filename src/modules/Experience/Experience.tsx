@@ -26,6 +26,8 @@ const Experience = () => {
   const experienceLoaded = useAppSettings((state) => state.experienceLoaded);
   const [distance, setDistance] = useState<number>(0);
   const [isDebug, setIsDebug] = useState<boolean>(false);
+  const [shouldScroll, setShouldScroll] = useState<boolean>(false);
+  const [isAboutMusicPlaying, setIsAboutMusicPlaying] = useState<boolean>(false);
   const [dpr, setDpr] = useState(1.5);
   const { isBigTablet, isDesktop } = useAppBreakpoints();
   // const {
@@ -53,9 +55,19 @@ const Experience = () => {
   const contactPosition: Vector3 = [0, isBigTablet ? -30 : -30, 0];
 
   useEffect(() => {
-    if (!experienceLoaded) return;
-    setDistance(2);
-  }, [experienceLoaded]);
+    if (experienceLoaded) {
+      setDistance(2);
+      if (isAboutMusicPlaying) {
+        setShouldScroll(false);
+
+        return;
+      }
+      setShouldScroll(true);
+      return;
+    }
+
+    setShouldScroll(false);
+  }, [experienceLoaded, isAboutMusicPlaying]);
 
   useEffect(() => {
     if (window.location.hash === '#forceDebug') {
@@ -90,7 +102,7 @@ const Experience = () => {
                     pages={isBigTablet ? 4 : 6}
                     distance={distance}
                     eps={0.00001}
-                    enabled={experienceLoaded}
+                    enabled={shouldScroll}
                   >
                     {isDesktop && <Cursor />}
                     <MainCamera />
@@ -100,6 +112,7 @@ const Experience = () => {
                     <AddMusicScene position={addMusicPosition} />
                     <AboutScene
                       position={aboutPosition}
+                      setShouldScroll={setShouldScroll}
                       //We need the sum of all scenesY for the face.
                       scenePositionY={welcomePosition[1] + addMusicPosition[1]}
                     />
