@@ -1,3 +1,5 @@
+import { PlayMusic } from '@/enums/Experience';
+
 /**
  * Callback functions via useContext.
  */
@@ -21,6 +23,11 @@ interface SoundManagerContextType {
    * Music that plays after the user discover the secret and close the modal.
    */
   onSecretFound: () => void;
+
+  /**
+   * Function that plays a WARNING INFO SUCCESS DANGER music.
+   */
+  playMusic: (value: PlayMusic, reset: () => void) => void;
 }
 
 export default SoundManagerContextType;

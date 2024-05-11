@@ -18,3 +18,13 @@ export enum GameOnHover {
   COD_1,
   COD_2,
 }
+
+/**
+ * Sense music for about scene.
+ */
+export enum PlayMusic {
+  Warning,
+  Danger,
+  Info,
+  Success,
+}

@@ -7,6 +7,8 @@ import { useAppBreakpoints, useAppTheme } from '@/hooks';
 import * as THREE from 'three';
 import { MeshBasicMaterial, MeshStandardMaterial } from 'three';
 import { fontLibrary } from '@/helpers';
+import { useSoundManagerContext } from '../../sounds/SoundManager/SoundManager';
+import { PlayMusic } from '@/enums/Experience';
 
 interface AboutSceneProps {
   position: Vector3;
@@ -17,7 +19,7 @@ interface AboutSceneProps {
 const AboutScene = ({ position, scenePositionY, setShouldScroll }: AboutSceneProps) => {
   const theme = useAppTheme();
   const { isBigTablet } = useAppBreakpoints();
-
+  const { playMusic } = useSoundManagerContext();
   const supportBackgroundRef = useRef<MeshBasicMaterial>(null);
   const textRef = useRef<MeshStandardMaterial>(null);
   const primaryColor = theme.colors.primary.main;
@@ -94,12 +96,25 @@ const AboutScene = ({ position, scenePositionY, setShouldScroll }: AboutScenePro
 
     // //TODO When selecting we dont allow scroll and we wait 10s until the tune is finish.
     setShouldScroll(false);
-    const seconds = 5 * 1000;
-    setTimeout(() => {
-      // Go back!.
-      window.scrollTo(0, 0.27);
-      reset();
-    }, seconds);
+
+    if (value === successColor) {
+      playMusic(PlayMusic.Success, reset);
+    } else if (value === infoColor) {
+      playMusic(PlayMusic.Info, reset);
+    } else if (value === dangerColor) {
+      playMusic(PlayMusic.Danger, reset);
+    } else if (value === warningColor) {
+      playMusic(PlayMusic.Warning, reset);
+    } else {
+      console.warn('Music not found');
+    }
+
+    // const seconds = 5 * 1000;
+    // setTimeout(() => {
+    //   // Go back!.
+    //   window.scrollTo(0, 0.27);
+    //   reset();
+    // }, seconds);
   };
 
   useEffect(() => {

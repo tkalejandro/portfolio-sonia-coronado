@@ -26,6 +26,26 @@ class AudioLibrary {
    * Song that will be located at the Audiolibrary.
    */
   omnisphereExperiment = () => 'audio/omnisphereExperiment.wav';
+
+  /**
+   * Song that plays when info is selected
+   */
+  infoMusic = () => 'audio/dramaticreveal.mp3'
+
+  /**
+   * Song that plays when warning is selected
+   */
+   warningMusic = () => 'audio/dramaticreveal.mp3'
+
+   /**
+   * Song that plays when success is selected
+   */
+  successMusic = () => 'audio/dramaticreveal.mp3'
+
+  /**
+   * Song that plays when danger is selected
+   */
+   dangerMusic = () => 'audio/dramaticreveal.mp3'
 }
 
 const audioLibrary = new AudioLibrary();

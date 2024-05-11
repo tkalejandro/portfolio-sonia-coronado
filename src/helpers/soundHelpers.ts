@@ -1,4 +1,4 @@
-import { Dispatch, MutableRefObject, SetStateAction } from 'react';
+import { Dispatch, MutableRefObject, RefObject, SetStateAction } from 'react';
 
 /**
  * Helpers to interact with sounds.
@@ -15,15 +15,16 @@ class SoundHelpers {
    * @param setProgress
    */
   smoothVolumeChange = async (
-    audioElement: MutableRefObject<HTMLAudioElement>,
+    audioElement: RefObject<HTMLAudioElement>,
     targetVolume: number,
     durationInSeconds: number,
     progress: boolean,
     setProgress: Dispatch<SetStateAction<boolean>>,
   ) => {
+    
     if (targetVolume < 0 || targetVolume > 1) {
       throw new Error(
-        `Please provide a targetVolume between 0 and 1. You provided: ${audioElement.current.TEXT_NODE}`,
+        `Please provide a targetVolume between 0 and 1. You provided: ${audioElement.current?.TEXT_NODE}`,
       );
     }
     if (progress) {
@@ -31,6 +32,11 @@ class SoundHelpers {
       return;
     }
     setProgress(true);
+
+    if (!audioElement.current) {
+      // Handle the case where audioElement.current is null
+      return;
+    }
 
     const framesPerSecond = 60;
     const totalFrames = durationInSeconds * framesPerSecond;
